@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/login_bg"
+    android:orientation="vertical"
+    tools:context=".goodsInfo.GoodsInfoActivity"
+    >
+
+    <RelativeLayout
+        android:id="@+id/title"
+        android:paddingLeft="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/main_title" >
+
+        <ImageView
+            android:id="@+id/ic_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:focusable="false"
+            android:layout_marginLeft="2dp"
+            android:clickable="true"
+            android:background="@drawable/back_image_selector"
+            />
+
+        <TextView
+            android:id="@+id/tv_titles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="商品基本信息"
+            android:layout_centerVertical="true"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"
+        android:gravity="center"
+        android:paddingRight="20dp"
+        android:orientation="vertical"
+        android:background="@color/white"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            >
+            <TextView
+                style="@style/LoginTextStyle"
+                android:text="名称"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                />
+            <EditText
+                android:id="@+id/edit_account"
+                style="@style/LoginEdittextStyle"
+                android:hint="请输入商品名称信息"
+                android:background="@color/white"
+                />
+            <ImageView
+                android:id="@+id/image_query_ic1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:focusable="false"
+                android:layout_marginLeft="2dp"
+                android:clickable="true"
+                android:background="@drawable/query_ic_selector"
+                android:layout_marginBottom="5dp"
+                />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/black"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:background="@color/lowGray"
+        >
+        <include
+            layout="@layout/goods_info_list_title"
+            />
+
+        <ListView
+            android:id="@+id/brand_info_list"
+            android:dividerHeight="1dp"
+            android:divider="@color/login_bg"
+            android:headerDividersEnabled="true"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:footerDividersEnabled="true"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:background="@color/login_bg"
+        android:orientation="vertical"
+        android:paddingBottom="4dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Button
+                style="@style/LoginBtnStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="增加"
+                />
+            <Button
+                style="@style/LoginBtnStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="修改"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="15dp"
+            >
+            <TextView
+                style="@style/MainTextViewStyle"
+                android:text="柜组编号: 12023"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                style="@style/MainTextViewStyle"
+                android:text="柜组名称:名称"
+                android:textSize="18sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="15dp"
+            >
+            <TextView
+                style="@style/MainTextViewStyle"
+                android:text="操作员编号: 12023"
+                android:textSize="15sp"
+                />
+
+            <TextView
+                style="@style/MainTextViewStyle"
+                android:text="操作员姓名:名称"
+                android:textSize="15sp"
+                android:layout_marginBottom="5dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

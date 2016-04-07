@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:gravity="center"
+              android:layout_width="fill_parent"
+              android:layout_marginLeft="10dp"
+              android:layout_marginRight="10dp"
+              android:layout_marginTop="3dp"
+              android:padding = "2dp"
+              android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/text_code_id"
+        style="@style/ListTitleStyle"
+        android:text="商品编号" />
+
+
+    <TextView
+        android:id="@+id/text_goods_name"
+        style="@style/ListTitleStyle"
+        android:text="商品名称" />
+
+    <TextView
+        android:id="@+id/text_goods_no"
+        style="@style/ListTitleStyle"
+        android:text="品牌编号" />
+
+    <TextView
+        style="@style/ListTitleStyle"
+        android:text="品牌名称"/>
+
+    <TextView
+        android:id="@+id/text_price"
+        style="@style/ListTitleStyle"
+        android:text="单位" />
+
+    <TextView
+        android:id="@+id/text_amount"
+        style="@style/ListTitleStyle"
+        android:text="货号" />
+
+    <TextView
+        android:id="@+id/text_money"
+        style="@style/ListTitleStyle"
+        android:text="单价" />
+
+</LinearLayout>

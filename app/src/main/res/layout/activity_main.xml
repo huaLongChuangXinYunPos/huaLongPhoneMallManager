@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/login_bg"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    >
+
+    <RelativeLayout
+        android:id="@+id/title"
+        android:paddingLeft="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/main_title" >
+
+        <ImageView
+            android:id="@+id/ic_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:focusable="false"
+            android:layout_marginLeft="2dp"
+            android:clickable="true"
+            android:background="@drawable/back_image_selector"
+            />
+
+        <TextView
+            android:id="@+id/tv_titles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="管理"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+
+        <Button
+            android:id="@+id/main_btn1"
+            style="@style/LoginBtnStyle"
+            android:text="开票管理"
+            />
+        <Button
+            android:id="@+id/main_btn2"
+            style="@style/LoginBtnStyle"
+            android:text="品牌信息管理"
+            />
+        <Button
+            android:id="@+id/main_btn3"
+            style="@style/LoginBtnStyle"
+            android:text="商品基本信息"
+            />
+        <Button
+            android:id="@+id/main_btn4"
+            style="@style/LoginBtnStyle"
+            android:text="柜组销售查询"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:gravity="bottom|left"
+        android:padding="15dp"
+        android:orientation="vertical"
+        android:background="@color/login_bg"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+               style="@style/MainTextViewStyle"
+                android:text="柜组编号: 12023"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                style="@style/MainTextViewStyle"
+                android:text="柜组名称:名称"
+                android:textSize="18sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="2dp"
+            >
+            <TextView
+                style="@style/MainTextViewStyle"
+                android:text="操作员编号: 12023"
+                android:textSize="15sp"
+                />
+
+            <TextView
+                style="@style/MainTextViewStyle"
+                android:text="操作员姓名:名称"
+                android:textSize="15sp"
+                android:layout_marginBottom="5dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
