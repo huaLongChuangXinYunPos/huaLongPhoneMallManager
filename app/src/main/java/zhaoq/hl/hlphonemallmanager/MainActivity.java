@@ -3,6 +3,7 @@ package zhaoq.hl.hlphonemallmanager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,6 +12,8 @@ import zhaoq.hl.hlphonemallmanager.brand.BrandInfoActivity;
 import zhaoq.hl.hlphonemallmanager.goodsInfo.GoodsInfoActivity;
 import zhaoq.hl.hlphonemallmanager.sellquery.SellQueryActivity;
 import zhaoq.hl.hlphonemallmanager.tickets.TicketActivity;
+import zhaoq.hl.hlphonemallmanager.utils.ApplicationUtils;
+import zhaoq.hl.hlphonemallmanager.utils.MyToast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -77,5 +80,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent();
         intent.setClass(this,cls);
         startActivity(intent);
+    }
+
+    //再按一次   退出程序
+    private long exitTime = 0;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode ==KeyEvent.KEYCODE_BACK &&
+                event.getAction() == KeyEvent.ACTION_DOWN){
+            if((System.currentTimeMillis() - exitTime)>2000){
+                MyToast.ToastIncenter(this, "再按一次推出程序").show();
+                exitTime = System.currentTimeMillis();
+            }else{
+                finish();
+                ApplicationUtils.getInstance().exit();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
