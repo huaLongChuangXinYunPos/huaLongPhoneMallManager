@@ -2,21 +2,56 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="@color/login_bg"
+    android:background="@drawable/dialog_background"
     >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dip"
+        android:layout_gravity="center"
+        android:gravity="center"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/logo"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="初始化柜组信息"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dip"
+        android:layout_marginTop="5dip"
+        android:layout_marginBottom="10dip"
+        android:background="#ff0000"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="bottom"
-        android:padding="5dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:orientation="horizontal"
         >
         <TextView
             style="@style/LoginTextStyle"
             android:text="编号"
+            android:textSize="18dp"
             android:background="@null"
             android:textColor="@color/black"
             />
@@ -24,39 +59,64 @@
             android:id="@+id/edit_account"
             style="@style/LoginEdittextStyle"
             android:hint="请输入导购编号"
-            android:padding="3dp"
-            android:background="@color/white"
             />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/black"
+        android:layout_marginTop="5dip"
+        android:layout_marginBottom="5dip"
+        android:background="#00ff00"
         />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="bottom"
-        android:padding="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
         android:orientation="horizontal"
         >
         <TextView
             style="@style/LoginTextStyle"
             android:text="密码"
             android:background="@null"
+            android:textSize="18dp"
             android:textColor="@color/black"
             />
         <EditText
             android:id="@+id/edit_password"
             style="@style/LoginEdittextStyle"
-            android:padding="3dp"
             android:hint="请输入导购密码"
-            android:background="@color/white"
             />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/black"
+        android:layout_marginTop="5dip"
+        android:background="#00ff00"
         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+
+        <Button
+            android:id="@+id/dialog_input_exit"
+            style="@style/LoginDialogBtnStyle"
+            android:layout_marginRight="25dp"
+            android:text="取消"
+            />
+
+        <Button
+            android:id="@+id/dialog_input_sure"
+            style="@style/LoginDialogBtnStyle"
+            android:layout_marginLeft="25dp"
+            android:text="确认"
+            />
+
+    </LinearLayout>
 </LinearLayout>

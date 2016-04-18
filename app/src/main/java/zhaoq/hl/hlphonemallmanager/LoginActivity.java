@@ -6,16 +6,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
+import zhaoq.hl.hlphonemallmanager.tasks.GetGUIZUinfoAsyncTask;
+import zhaoq.hl.hlphonemallmanager.tasks.TaskCallBack;
+import zhaoq.hl.hlphonemallmanager.tasks.TaskResult;
 import zhaoq.hl.hlphonemallmanager.utils.ApplicationUtils;
 import zhaoq.hl.hlphonemallmanager.utils.MyToast;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private EditText account,password;
 
@@ -33,6 +39,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         btnLogin.setOnClickListener(this);
         btnLoaddata.setOnClickListener(this);
+
     }
 
 
@@ -45,11 +52,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch(v.getId()){
             case R.id.btn_login:
                 toMainActiivity();
+
+
                 break;
 
             case R.id.btn_loaddata:
                 //打开  dialog对话框  获取数据
-                InputInfoDialog dialog = new InputInfoDialog(this);
+                InputInfoDialog dialog = new InputInfoDialog(this,R.style.LoginAlertDialogStyle);
                 dialog.show();
                 break;
             default:
@@ -85,5 +94,4 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         return super.onKeyDown(keyCode, event);
     }
-
 }
