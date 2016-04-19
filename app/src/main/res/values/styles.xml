@@ -34,14 +34,16 @@
     <style name="LoginBtnStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">25dp</item>
+        <item name="android:textSize">20dp</item>
         <item name="android:textColor">@drawable/text_color_selector</item>
         <item name="android:background">@drawable/btn_login_selector</item>
         <item name="android:layout_margin">10dp</item>
-        <item name="android:paddingTop">5dp</item>
-        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:paddingBottom">3dp</item>
         <item name="android:gravity">center</item>
     </style>
+
     <!--主界面中  底部textView的样式-->
     <style name="MainTextViewStyle">
         <item name="android:layout_width">0dp</item>
@@ -81,5 +83,13 @@
         <item name="android:layout_marginTop">15dp</item>
         <item name="android:background">@drawable/btn_login_selector</item>
         <item name="android:layout_marginBottom">15dp</item>
+    </style>
+
+    <!--进度条样式-->
+    <style name="ProDialogStyle"  parent="@android:style/Theme.Dialog">
+        <item name="android:background">@null</item>
+        <item name="android:paddingLeft">10dip</item>
+        <item name="android:paddingRight">15dip</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 </resources>

@@ -14,7 +14,7 @@ public abstract class BaseAsyncTask extends AsyncTask<String,Void,TaskResult>{
     public TaskCallBack callBack;
 
     public BaseAsyncTask(TaskCallBack callBack){
-        this.callBack = callBack;
+        this.callBack =  callBack;
     }
 
     //重写   onpostExecute方法：

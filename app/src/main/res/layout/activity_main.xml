@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="8"
-        android:gravity="center"
+        android:gravity="bottom"
         android:orientation="vertical"
         >
 
@@ -67,13 +67,55 @@
             style="@style/LoginBtnStyle"
             android:text="柜组销售查询"
             />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/down_guizu_info"
+                style="@style/LoginBtnStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="更新柜组信息"
+                />
+            <Button
+                android:id="@+id/down_guizu_member"
+                style="@style/LoginBtnStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="更新员工信息"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/down_guizu_brand_info"
+                style="@style/LoginBtnStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="更新品牌信息"
+                />
+            <Button
+                android:id="@+id/down_guizu_goods_info"
+                style="@style/LoginBtnStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="更新商品信息"
+                />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:gravity="bottom|left"
+        android:gravity="center|left"
         android:padding="15dp"
         android:orientation="vertical"
         android:background="@color/login_bg"
@@ -84,12 +126,14 @@
             android:orientation="horizontal"
             >
             <TextView
-               style="@style/MainTextViewStyle"
+                android:id="@+id/main_bottom_guizuno_info"
+                style="@style/MainTextViewStyle"
                 android:text="柜组编号: 12023"
                 android:textSize="18sp"
                 />
 
             <TextView
+                android:id="@+id/main_botton_guizu_mingcheng"
                 style="@style/MainTextViewStyle"
                 android:text="柜组名称:名称"
                 android:textSize="18sp"
@@ -103,12 +147,14 @@
             android:layout_marginTop="2dp"
             >
             <TextView
+                android:id="@+id/main_bottom_mermberno_info"
                 style="@style/MainTextViewStyle"
                 android:text="操作员编号: 12023"
                 android:textSize="15sp"
                 />
 
             <TextView
+                android:id="@+id/main_bottom_mermber_mingcheng"
                 style="@style/MainTextViewStyle"
                 android:text="操作员姓名:名称"
                 android:textSize="15sp"

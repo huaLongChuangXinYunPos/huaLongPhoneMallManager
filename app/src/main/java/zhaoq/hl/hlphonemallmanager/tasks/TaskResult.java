@@ -1,5 +1,7 @@
 package zhaoq.hl.hlphonemallmanager.tasks;
 
+import org.json.JSONObject;
+
 /**
  * PACKAGE_NAME:zhaoq.hl.hlphonemallmanager.tasks
  * CREATE_BY:zhaoqiang
@@ -16,6 +18,6 @@ public final class TaskResult {
     public static int result_status = -1 ;//默认  返回  -1没有返回数据
 
     // 默认  返回的  数据对象
-    public static Object data = null;
+    public static JSONObject data = null;
 
 }

@@ -2,11 +2,9 @@ package zhaoq.hl.hlphonemallmanager;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +13,8 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-import zhaoq.hl.hlphonemallmanager.entity.GUIZUNo;
-import zhaoq.hl.hlphonemallmanager.tasks.GetGUIZUinfoAsyncTask;
+import zhaoq.hl.hlphonemallmanager.entity.RequestDataEntity;
+import zhaoq.hl.hlphonemallmanager.tasks.InitLoginUserinfoAsyncTask;
 import zhaoq.hl.hlphonemallmanager.tasks.TaskCallBack;
 import zhaoq.hl.hlphonemallmanager.tasks.TaskResult;
 import zhaoq.hl.hlphonemallmanager.utils.MyToast;
@@ -31,15 +29,18 @@ import zhaoq.hl.hlphonemallmanager.utils.StateUtils;
 public class InputInfoDialog extends Dialog implements View.OnClickListener,TaskCallBack {
 
     private Context context;
+    private SQLiteDatabase db;
 
     public InputInfoDialog(Context context) {
         super(context);
         this.context = context;
     }
 
-    public InputInfoDialog(Context context, int themeResId) {
+    public InputInfoDialog(Context context, int themeResId,SQLiteDatabase db) {
         super(context, themeResId);
         this.context = context;
+        this.db = db;
+
     }
 
     private View view;
@@ -86,7 +87,8 @@ public class InputInfoDialog extends Dialog implements View.OnClickListener,Task
                     //添加  数据信息
                     ArrayList<String> list = new ArrayList<String>();
 
-                    GUIZUNo entity = new GUIZUNo();
+                    RequestDataEntity entity = new RequestDataEntity();
+                    entity.setAction("telCode");
                     entity.setGuizuPwd(password);
                     entity.setGuizuNo(account);
                     entity.setTelCode(StateUtils.getIMEI(context));  //获取  手机标识
@@ -96,7 +98,9 @@ public class InputInfoDialog extends Dialog implements View.OnClickListener,Task
                     list.add(json);
 
                     //开始  查询  数据信息
-                    new GetGUIZUinfoAsyncTask(this).execute(list.toString());  //并将数据信息  保存到本地
+                    new InitLoginUserinfoAsyncTask(this,context,db).execute(list.toString());  //并将数据信息  保存到本地
+
+                    this.dismiss();
                 }
                 break;
 
@@ -119,19 +123,19 @@ public class InputInfoDialog extends Dialog implements View.OnClickListener,Task
     public void taskFinished(TaskResult result) {
         switch (result.result_status){
             case -1:
-                MyToast.ToastIncenter(context,"请检查服务器").show();
+                MyToast.ToastIncenter(context,"加载失败,请检查服务器").show();
                 break;
             case 1:
-                MyToast.ToastIncenter(context,"加载成功，可以登录").show();
+                MyToast.ToastIncenter(context,"加载成功,可以登录").show();
                 break;
             case 2:
-                MyToast.ToastIncenter(context,"柜组密码错误").show();
+                MyToast.ToastIncenter(context,"加载失败,柜组密码错误").show();
                 break;
             case 3:
-                MyToast.ToastIncenter(context,"当前柜组已经被绑定手机\n\r不准重复绑定。").show();
+                MyToast.ToastIncenter(context,"加载失败,当前柜组已被绑定其他手机").show();
                 break;
             case 4:
-                MyToast.ToastIncenter(context,"当前柜组信息不属于该手机").show();
+                MyToast.ToastIncenter(context,"加载失败,当前柜组信息不属于该手机").show();
                 break;
             default:
                 break;

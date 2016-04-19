@@ -21,7 +21,7 @@ import zhaoq.hl.hlphonemallmanager.utils.HttpTools;
 public final class ClientApi {
 
     /**
-     * 从服务器  初始化  柜组信息  用于加载到本地   用户登录
+     *  登录界面中  从服务器  初始化  柜组信息  用于加载到本地   用户登录
      * @param data
      * @return
      */
@@ -29,8 +29,7 @@ public final class ClientApi {
         JSONObject ret = null;
         HashMap<String,String> map = new HashMap<String,String>();
         map.put("name",data);
-
-        byte[] bytes = HttpTools.doPost(Configs.GET_GUIZU_INFO_URL,map);
+        byte[] bytes = HttpTools.doPost(Configs.LOGIN_GET_GUIZU_INFO_URL,map);
         if(bytes!=null){
             try {
                 String result = new String(bytes,"utf-8");
@@ -45,5 +44,29 @@ public final class ClientApi {
         return null;
     }
 
+
+
+    /**
+     * 主界面  中初始化    下载数据信息
+     * @return
+     */
+    public static JSONObject getGUIZUinfo(String data,String downP){
+        JSONObject ret = null;
+        HashMap<String,String> map = new HashMap<String,String>();
+        map.put("name",data);
+        byte[] bytes = HttpTools.doPost(Configs.MAIN_DOWN_INFO_URL,map);
+        if(bytes!=null){
+            try {
+                String result = new String(bytes,"utf-8");
+                ret = new JSONObject(result);
+                return ret;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 
 }
