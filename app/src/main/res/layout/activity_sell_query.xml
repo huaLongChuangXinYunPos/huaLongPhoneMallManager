@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/login_bg"
     android:orientation="vertical"
-    tools:context=".tickets.TicketActivity"
+    tools:context=".activity.TicketManageActivity"
     >
 
     <RelativeLayout
@@ -186,12 +186,14 @@
             android:layout_marginLeft="15dp"
             >
             <TextView
+                android:id="@+id/main_bottom_guizuno_info"
                 style="@style/MainTextViewStyle"
                 android:text="柜组编号: 12023"
                 android:textSize="18sp"
                 />
 
             <TextView
+                android:id="@+id/main_botton_guizu_mingcheng"
                 style="@style/MainTextViewStyle"
                 android:text="柜组名称:名称"
                 android:textSize="18sp"
@@ -206,12 +208,14 @@
             android:layout_marginLeft="15dp"
             >
             <TextView
+                android:id="@+id/main_bottom_mermberno_info"
                 style="@style/MainTextViewStyle"
                 android:text="操作员编号: 12023"
                 android:textSize="15sp"
                 />
 
             <TextView
+                android:id="@+id/main_bottom_mermber_mingcheng"
                 style="@style/MainTextViewStyle"
                 android:text="操作员姓名:名称"
                 android:textSize="15sp"

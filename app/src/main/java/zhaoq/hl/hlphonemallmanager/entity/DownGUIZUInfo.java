@@ -4,9 +4,9 @@ package zhaoq.hl.hlphonemallmanager.entity;
  * PACKAGE_NAME:zhaoq.hl.hlphonemallmanager.entity
  * CREATE_BY:zhaoqiang
  * AUTHOR_EMAIL:zhaoq_hero@163.com
- * DATE: 2016/04/19  18:05
+ * DATE: 2016/04/20  11:07
  */
-public final class GUOZUEntitiy {
+public final class DownGUIZUInfo {
     /**
      * guizu : 甯濊豹鍥借嵂
      * guizuno : 1001
@@ -15,6 +15,7 @@ public final class GUOZUEntitiy {
      * leixing : 鍖栧鍝�
      * TelCode : 9879D918F2B00F075C56F2347E27EF24
      */
+
     private String guizu;
     private String guizuno;
     private String quno;
@@ -70,9 +71,10 @@ public final class GUOZUEntitiy {
         this.TelCode = TelCode;
     }
 
+    //重写
     @Override
     public String toString() {
-        return "GUOZUEntitiy{" +
+        return "{" +
                 "guizu='" + guizu + '\'' +
                 ", guizuno='" + guizuno + '\'' +
                 ", quno='" + quno + '\'' +

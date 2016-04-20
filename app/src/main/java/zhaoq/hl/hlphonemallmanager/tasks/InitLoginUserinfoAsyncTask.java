@@ -72,11 +72,11 @@ public class InitLoginUserinfoAsyncTask extends BaseAsyncTask {
                 JSONObject object = result.data;
                 JSONArray data = object.getJSONArray("data");
                 //解析  数据
-                ArrayList<LoginUserEntitiy> lists = JSONUtils.parseToList(data);
+                ArrayList<LoginUserEntitiy> lists = JSONUtils.parseMemberToList(data);
 //                操作数据库
                 db.beginTransaction();
                 if(lists!=null){
-                    db.execSQL("delete from t_users");
+                    db.execSQL("delete from "+ MySqliteHelper.TABLE_USER_NAME);
                     for(int i = 0;i < lists.size();i++){
 //                        t_users(gonghao,guizu,guizuno,mingcheng,Pass)
                         db.execSQL(String.format(MySqliteHelper.INSERT_USE_INFO,lists.get(i).getGonghao(),lists.get(i).getGuizu(),

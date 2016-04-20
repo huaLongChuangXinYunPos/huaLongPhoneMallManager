@@ -1,4 +1,4 @@
-package zhaoq.hl.hlphonemallmanager;
+package zhaoq.hl.hlphonemallmanager.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+import zhaoq.hl.hlphonemallmanager.R;
 import zhaoq.hl.hlphonemallmanager.entity.RequestDataEntity;
 import zhaoq.hl.hlphonemallmanager.tasks.InitLoginUserinfoAsyncTask;
 import zhaoq.hl.hlphonemallmanager.tasks.TaskCallBack;
@@ -31,16 +32,10 @@ public class InputInfoDialog extends Dialog implements View.OnClickListener,Task
     private Context context;
     private SQLiteDatabase db;
 
-    public InputInfoDialog(Context context) {
-        super(context);
-        this.context = context;
-    }
-
     public InputInfoDialog(Context context, int themeResId,SQLiteDatabase db) {
         super(context, themeResId);
         this.context = context;
         this.db = db;
-
     }
 
     private View view;

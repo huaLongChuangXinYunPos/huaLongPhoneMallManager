@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import zhaoq.hl.hlphonemallmanager.db.MySqliteHelper;
+import zhaoq.hl.hlphonemallmanager.dialog.InputInfoDialog;
 import zhaoq.hl.hlphonemallmanager.entity.LoginUserEntitiy;
 import zhaoq.hl.hlphonemallmanager.utils.ApplicationUtils;
 import zhaoq.hl.hlphonemallmanager.utils.MyToast;
@@ -22,8 +23,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private Button btnLogin,btnLoaddata;
 
-    private MySqliteHelper helper;
-    private  SQLiteDatabase db;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +39,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLoaddata.setOnClickListener(this);
 
         //将  数据保存到本地数据库：  创建  数据库
-        helper = new MySqliteHelper(this,MySqliteHelper.GUIZU_DB);
-        db = helper.getWritableDatabase();
+        db = ApplicationUtils.getInstance().getHelper(this).getWritableDatabase();
+
+        ApplicationUtils.getInstance().addActivity(this);
     }
 
 
@@ -56,9 +57,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String password = edpassword.getText().toString().trim();
                 if(checkInput(account, password)){
                     //从数据库中  查询数据
-                    db = helper.getReadableDatabase();
+                    db = ApplicationUtils.getInstance().getHelper(this).getReadableDatabase();
                     //查询数据
-                    Cursor cursor = db.query("t_users",new String[]{"gonghao","Pass","guizu","guizuno","mingcheng"},
+                    Cursor cursor = db.query(MySqliteHelper.TABLE_USER_NAME,new String[]{"gonghao","Pass","guizu","guizuno","mingcheng"},
                             "gonghao = '"+ account +"'",null,null,null,null);
 
                     //判断  数据：
@@ -76,8 +77,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     entity.setGuizuno(cursor.getString(cursor.getColumnIndex("guizuno")));
                                     entity.setPass(cursor.getString(cursor.getColumnIndex("Pass")));
                                     entity.setMingcheng(cursor.getString(cursor.getColumnIndex("mingcheng")));
+                                    //  全局用户信息
+                                    ApplicationUtils.getInstance().setUser(entity);
 
-                                    toMainActivity(entity);
+                                    toMainActivity();
                                 }else{
                                     MyToast.ToastIncenter(this,"登录失败,请验证输入密码").show();
                                 }
@@ -103,10 +106,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     /**
      * 开启   主界面
      */
-    private void toMainActivity(LoginUserEntitiy entity) {
+    private void toMainActivity() {
         Intent intent = new Intent();
-        intent.setClass(this,MainActivity.class);
-        intent.putExtra("user",entity);
+        intent.setClass(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
@@ -129,8 +131,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         return super.onKeyDown(keyCode, event);
     }
-
-
 
     //检查  数据
     private boolean checkInput(String account,String password) {

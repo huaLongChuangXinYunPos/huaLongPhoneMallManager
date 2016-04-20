@@ -89,8 +89,6 @@ public final class HttpTools {
                             .append("=")
                             .append(URLEncoder.encode(en.getValue(),"utf-8"));
                 }
-                Log.i("info",map.toString()+"00000000");
-
                 URL u = new URL(url);
                 HttpURLConnection connection = (HttpURLConnection) u.openConnection();
                 connection.setReadTimeout(READ_OUTTIME);

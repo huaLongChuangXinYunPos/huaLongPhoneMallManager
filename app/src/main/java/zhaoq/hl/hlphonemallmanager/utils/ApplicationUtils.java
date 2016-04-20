@@ -2,9 +2,13 @@ package zhaoq.hl.hlphonemallmanager.utils;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import zhaoq.hl.hlphonemallmanager.db.MySqliteHelper;
+import zhaoq.hl.hlphonemallmanager.entity.LoginUserEntitiy;
 
 /**
  * PACKAGE_NAME:zhaoq.hl.fastdelivery.utils
@@ -54,4 +58,22 @@ public class ApplicationUtils extends Application {
         super.onLowMemory();
         System.gc();
     }
+
+    private static LoginUserEntitiy user;
+
+    private static MySqliteHelper helper;
+
+    public MySqliteHelper getHelper(Context context){
+        return new MySqliteHelper(context,MySqliteHelper.GUIZU_DB);
+    }
+
+    public void setUser(LoginUserEntitiy user){
+        this.user = user;
+    }
+
+    //获取  user用户对象
+    public LoginUserEntitiy getUser(){
+        return user;
+    }
+
 }

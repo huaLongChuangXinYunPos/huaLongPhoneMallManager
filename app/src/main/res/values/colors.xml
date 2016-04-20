@@ -16,4 +16,8 @@
     <color name="highGray">#837C77</color>
 
     <color name="red">#FF0000</color>
+
+
+    <color name="consume_btn_pressed">#6EC043</color>
+    <color name="consume_btn_normal">#38A0FF</color>
 </resources>

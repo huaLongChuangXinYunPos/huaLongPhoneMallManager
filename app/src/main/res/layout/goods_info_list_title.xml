@@ -14,7 +14,6 @@
         style="@style/ListTitleStyle"
         android:text="商品编号" />
 
-
     <TextView
         android:id="@+id/text_goods_name"
         style="@style/ListTitleStyle"

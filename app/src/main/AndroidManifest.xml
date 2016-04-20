@@ -30,23 +30,19 @@
             android:theme="@style/Theme.AppCompat.NoActionBar"
             />
         <activity
-            android:name=".tickets.TicketActivity"
+            android:name=".activity.TicketManageActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             />
         <activity
-            android:name=".brand.BrandInfoActivity"
+            android:name=".activity.BrandManageActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             />
         <activity
-            android:name=".goodsInfo.GoodsInfoActivity"
+            android:name=".activity.GoodsInfoActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             />
         <activity
-            android:name=".sellquery.SellQueryActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            />
-        <activity
-            android:name=".tickets.activity.AddTicketInfoActivity"
+            android:name=".activity.SellQueryActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             />
     </application>

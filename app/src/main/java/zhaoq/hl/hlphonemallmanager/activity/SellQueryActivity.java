@@ -1,27 +1,24 @@
-package zhaoq.hl.hlphonemallmanager.sellquery;
+package zhaoq.hl.hlphonemallmanager.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import zhaoq.hl.hlphonemallmanager.BaseActivity;
 import zhaoq.hl.hlphonemallmanager.R;
 
-public class SellQueryActivity extends AppCompatActivity implements View.OnClickListener {
+public class SellQueryActivity extends BaseActivity{
 
     private ImageView icBack;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void findView() {
         setContentView(R.layout.activity_sell_query);
         icBack  = (ImageView) findViewById(R.id.ic_back);
         icBack.setOnClickListener(this);
     }
 
-
     @Override
-    public void onClick(View v) {
+    protected void myOnclick(View v) {
         switch(v.getId()){
             case R.id.ic_back:
                 finish();

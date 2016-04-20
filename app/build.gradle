@@ -6,9 +6,9 @@ android {
 
     defaultConfig {
         applicationId "zhaoq.hl.hlphonemallmanager"
-        minSdkVersion 11
+        minSdkVersion 14
         targetSdkVersion 23
-        versionCode 1
+        versionCode 14
         versionName "1.0"
     }
     buildTypes {

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/login_bg"
     android:orientation="vertical"
-    tools:context=".tickets.TicketActivity"
+    tools:context=".activity.TicketManageActivity"
     >
 
     <RelativeLayout
@@ -42,12 +42,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="2.5"
         android:paddingBottom="10dp"
-        android:paddingLeft="20dp"
+        android:paddingLeft="10dp"
         android:paddingTop="5dp"
         android:gravity="center"
-        android:paddingRight="20dp"
+        android:paddingRight="10dp"
         android:orientation="vertical"
         android:background="@color/white"
         >
@@ -65,6 +65,7 @@
                 android:textColor="@color/black"
                 />
             <EditText
+                android:id="@+id/input_brand_no"
                 style="@style/LoginEdittextStyle"
                 android:hint="请输入品牌编号"
                 android:background="@color/white"
@@ -100,11 +101,13 @@
                 android:textColor="@color/black"
                 />
             <EditText
+                android:id="@+id/input_goods_no"
                 style="@style/LoginEdittextStyle"
                 android:hint="请输入商品货号"
                 android:background="@color/white"
                 />
             <ImageView
+                android:id="@+id/image_query_ic2"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerVertical="true"
@@ -120,6 +123,71 @@
             android:layout_height="2dp"
             android:background="@color/black"
             />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            >
+            <TextView
+                style="@style/LoginTextStyle"
+                android:text="单价:"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                />
+            <EditText
+                android:id="@+id/goods_unit_price"
+                style="@style/LoginEdittextStyle"
+                android:hint="输入单价"
+                android:textSize="14sp"
+                android:background="@color/white"
+                />
+            <TextView
+                style="@style/LoginTextStyle"
+                android:text="数量:"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                />
+            <EditText
+                android:id="@+id/goods_amount"
+                style="@style/LoginEdittextStyle"
+                android:hint="输入数量"
+                android:textSize="14sp"
+                android:background="@color/white"
+                />
+            <TextView
+                style="@style/LoginTextStyle"
+                android:text="金额:"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                />
+            <EditText
+                android:id="@+id/goods_money"
+                style="@style/LoginEdittextStyle"
+                android:hint="输入金额"
+                android:textSize="14sp"
+                android:background="@color/white"
+                />
+
+            <Button
+                android:id="@+id/btn_add"
+                style="@style/LoginBtnStyle"
+                android:layout_width="45dip"
+                android:layout_height="28dip"
+                android:padding="0dp"
+                android:layout_gravity="center"
+                android:layout_margin="2dp"
+                android:background="@drawable/btn_consume_selector"
+                android:textSize="13sp"
+                android:text="添加"
+                />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/black"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -128,27 +196,25 @@
         android:layout_weight="8"
         android:background="@color/lowGray"
         >
-
         <include
             layout="@layout/tickets_managment_list_title"
             />
-
-    <ListView
-        android:id="@+id/tickets_managment_goods_list"
-        android:dividerHeight="1dp"
-        android:divider="@color/login_bg"
-        android:headerDividersEnabled="true"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:footerDividersEnabled="true"
-        />
+        <ListView
+            android:id="@+id/tickets_managment_goods_list"
+            android:dividerHeight="1dp"
+            android:divider="@color/login_bg"
+            android:headerDividersEnabled="true"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:footerDividersEnabled="true"
+            />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:background="@color/login_bg"
         android:orientation="vertical"
         android:paddingBottom="4dp"
@@ -159,6 +225,7 @@
             android:orientation="horizontal"
             >
             <Button
+                android:id="@+id/save_and_print"
                 style="@style/LoginBtnStyle"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -180,12 +247,14 @@
             android:layout_marginLeft="15dp"
             >
             <TextView
+                android:id="@+id/main_bottom_guizuno_info"
                 style="@style/MainTextViewStyle"
                 android:text="柜组编号: 12023"
                 android:textSize="18sp"
                 />
 
             <TextView
+                android:id="@+id/main_botton_guizu_mingcheng"
                 style="@style/MainTextViewStyle"
                 android:text="柜组名称:名称"
                 android:textSize="18sp"
@@ -200,12 +269,14 @@
             android:layout_marginLeft="15dp"
             >
             <TextView
+                android:id="@+id/main_bottom_mermberno_info"
                 style="@style/MainTextViewStyle"
                 android:text="操作员编号: 12023"
                 android:textSize="15sp"
                 />
 
             <TextView
+                android:id="@+id/main_bottom_mermber_mingcheng"
                 style="@style/MainTextViewStyle"
                 android:text="操作员姓名:名称"
                 android:textSize="15sp"
