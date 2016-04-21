@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import zhaoq.hl.hlphonemallmanager.R;
+import zhaoq.hl.hlphonemallmanager.adapter.SelectExtralGoodsDialogAdapter;
 import zhaoq.hl.hlphonemallmanager.entity.DownGUIGUGoodsEntiity;
 
 /**
@@ -21,7 +22,7 @@ import zhaoq.hl.hlphonemallmanager.entity.DownGUIGUGoodsEntiity;
  * AUTHOR_EMAIL:zhaoq_hero@163.com
  * DATE: 2016/04/20  16:37
  */
-public class SelectGoodsDialog extends Dialog implements AdapterView.OnItemClickListener {
+public class SelectExtralGoodsDialog extends Dialog implements AdapterView.OnItemClickListener {
 
     private ArrayList<DownGUIGUGoodsEntiity> list;
     private Context context;
@@ -29,7 +30,7 @@ public class SelectGoodsDialog extends Dialog implements AdapterView.OnItemClick
     private View view;
 
     //构造器
-    public SelectGoodsDialog(Context context, int style, ArrayList<DownGUIGUGoodsEntiity> list) {
+    public SelectExtralGoodsDialog(Context context, int style, ArrayList<DownGUIGUGoodsEntiity> list) {
         super(context,style);
         this.list = list;
         this.context = context;
@@ -37,7 +38,6 @@ public class SelectGoodsDialog extends Dialog implements AdapterView.OnItemClick
     }
 
     private ListView listView;
-    private ArrayList<String> list2;
 
     //创建 布局
     @Override
@@ -45,34 +45,23 @@ public class SelectGoodsDialog extends Dialog implements AdapterView.OnItemClick
         super.onCreate(savedInstanceState);
         view = LayoutInflater.from(context).inflate(R.layout.select_brand_dialog,null);
         setContentView(view);
-
         TextView textTitle = (TextView) view.findViewById(R.id.title_dialog);
         textTitle.setText("选择商品");
 
         listView = (ListView) view.findViewById(R.id.list_view);
 
-        initList();
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,R.layout.text_view,list2);
-
+        SelectExtralGoodsDialogAdapter adapter = new SelectExtralGoodsDialogAdapter(context,list);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(this);
     }
 
-    private void initList() {
-        list2 = new ArrayList<String>();
-        for(int i=0;i<list.size();i++){
-            list2.add(list.get(i).getMingcheng());
-        }
-    }
-
-    public static final String selectGoodsDialog = "SELECT_GOODS_DIALOG";
+    public static final String selectExtralGoodsDialog = "SELECT_EXTRAL_GOODS_DIALOG";
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         //回调  回去
-        callback.dialogCallback(position,selectGoodsDialog);
+        callback.dialogCallback(position,selectExtralGoodsDialog);
         this.dismiss();
     }
 

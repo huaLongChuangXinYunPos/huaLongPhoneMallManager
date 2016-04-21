@@ -148,7 +148,7 @@
             />
 
         <ListView
-            android:id="@+id/tickets_managment_goods_list"
+            android:id="@+id/sell_query_listview"
             android:dividerHeight="1dp"
             android:divider="@color/login_bg"
             android:headerDividersEnabled="true"

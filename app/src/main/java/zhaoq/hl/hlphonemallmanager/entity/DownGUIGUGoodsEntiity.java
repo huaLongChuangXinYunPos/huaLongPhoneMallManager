@@ -22,6 +22,10 @@ public final class DownGUIGUGoodsEntiity {
      * guige :
      */
 
+    private String amount;//购买 数量
+    private String money;//购买 金额
+
+
     private String guizu;
     private String guizuno;
     private String pinpai;
@@ -34,6 +38,30 @@ public final class DownGUIGUGoodsEntiity {
     private double Bzlsj;
     private String Danwei;
     private String guige;
+
+    public String getcSpno_POS() {
+        return cSpno_POS;
+    }
+
+    public void setcSpno_POS(String cSpno_POS) {
+        this.cSpno_POS = cSpno_POS;
+    }
+
+    public String getMoney() {
+        return money;
+    }
+
+    public void setMoney(String money) {
+        this.money = money;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
 
     public String getGuizu() {
         return guizu;
@@ -130,10 +158,14 @@ public final class DownGUIGUGoodsEntiity {
     public void setGuige(String guige) {
         this.guige = guige;
     }
+
+
     @Override
     public String toString() {
         return "{" +
-                "guizu='" + guizu + '\'' +
+                "amount='" + amount + '\'' +
+                ", money='" + money + '\'' +
+                ", guizu='" + guizu + '\'' +
                 ", guizuno='" + guizuno + '\'' +
                 ", pinpai='" + pinpai + '\'' +
                 ", pinpaino='" + pinpaino + '\'' +

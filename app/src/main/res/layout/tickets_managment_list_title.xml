@@ -3,33 +3,41 @@
               android:orientation="horizontal"
               android:gravity="center"
               android:layout_width="fill_parent"
-              android:layout_marginLeft="5dp"
-              android:layout_marginRight="5dp"
-              android:layout_marginTop="3dp"
+              android:background="@color/lowGray"
+              android:paddingLeft="5dp"
+              android:paddingRight="5dp"
+              android:paddingTop="3dp"
+              android:clickable="true"
               android:padding="2dp"
               android:layout_height="wrap_content" >
 
     <TextView
+        android:id="@+id/text1"
         style="@style/ListTitleStyle"
-        android:text="编码" />
+        android:text="序号" />
 
     <TextView
+        android:id="@+id/text2"
         style="@style/ListTitleStyle"
         android:text="商品名称" />
 
     <TextView
+        android:id="@+id/text3"
         style="@style/ListTitleStyle"
         android:text="货号" />
 
     <TextView
+        android:id="@+id/text4"
         style="@style/ListTitleStyle"
         android:text="单价" />
 
     <TextView
+        android:id="@+id/text5"
         style="@style/ListTitleStyle"
         android:text="数量" />
 
     <TextView
+        android:id="@+id/text6"
         style="@style/ListTitleStyle"
         android:text="金额" />
 

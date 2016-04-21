@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:padding="5dip"
+              android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/list_item_title"
+        android:layout_width="match_parent"
+        android:singleLine="true"
+        android:focusable="false"
+        android:textColor="@drawable/dialog_text_selector"
+        android:layout_height="wrap_content"
+        android:text="1,霸王洗发水,牌子:霸王品牌"
+        />
+
+    <TextView
+        android:id="@+id/list_item_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="单价:22.9元/个,"
+        android:focusable="false"
+        android:textColor="@drawable/dialog_text_selector"
+        android:paddingTop="3dip"
+        android:layout_below="@id/list_item_title"
+        android:gravity="center_vertical"
+        />
+
+    <TextView
+        android:id="@+id/list_item_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@drawable/dialog_text_selector"
+        android:text="商品号：100200"
+        android:focusable="false"
+        android:layout_toRightOf="@id/list_item_info"
+        android:gravity="right"
+        android:layout_alignBottom="@id/list_item_info"
+        />
+</RelativeLayout>

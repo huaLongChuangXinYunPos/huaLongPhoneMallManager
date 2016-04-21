@@ -100,7 +100,7 @@
             />
 
         <ListView
-            android:id="@+id/brand_info_list"
+            android:id="@+id/goods_info_list"
             android:dividerHeight="1dp"
             android:divider="@color/login_bg"
             android:headerDividersEnabled="true"

@@ -3,8 +3,10 @@ package zhaoq.hl.hlphonemallmanager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import zhaoq.hl.hlphonemallmanager.entity.LoginUserEntitiy;
@@ -32,14 +34,13 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         memberNo = (TextView) findViewById(R.id.main_bottom_mermberno_info);
         memberName = (TextView) findViewById(R.id.main_bottom_mermber_mingcheng);
 
+        ApplicationUtils.getInstance().addActivity(this);
         user = ApplicationUtils.getInstance().getUser();
 
         guizuNo.setText("柜组编号:"+user.getGuizuno());
         guizuName.setText("柜组名称:"+ user.getGuizu());
         memberNo.setText("操作员编号:"+user.getGonghao());
         memberName.setText("操作员姓名:" + user.getMingcheng());
-
-        ApplicationUtils.getInstance().addActivity(this);
     }
 
     protected abstract void findView();
