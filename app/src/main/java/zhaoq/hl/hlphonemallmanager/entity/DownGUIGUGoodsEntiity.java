@@ -1,12 +1,14 @@
 package zhaoq.hl.hlphonemallmanager.entity;
 
+import java.io.Serializable;
+
 /**
  * PACKAGE_NAME:zhaoq.hl.hlphonemallmanager.entity
  * CREATE_BY:zhaoqiang
  * AUTHOR_EMAIL:zhaoq_hero@163.com
  * DATE: 2016/04/20  11:49
  */
-public final class DownGUIGUGoodsEntiity {
+public final class DownGUIGUGoodsEntiity implements Serializable {
     /**
      * guizu : 甯濊豹鍥借嵂
      * guizuno : 1001

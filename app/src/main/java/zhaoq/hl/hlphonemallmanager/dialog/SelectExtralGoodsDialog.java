@@ -56,12 +56,12 @@ public class SelectExtralGoodsDialog extends Dialog implements AdapterView.OnIte
         listView.setOnItemClickListener(this);
     }
 
-    public static final String selectExtralGoodsDialog = "SELECT_EXTRAL_GOODS_DIALOG";
+    public static final String AUTHORITY = "SELECT_EXTRAL_GOODS_DIALOG";
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         //回调  回去
-        callback.dialogCallback(position,selectExtralGoodsDialog);
+        callback.dialogCallbackSelectedItem(position,AUTHORITY);
         this.dismiss();
     }
 

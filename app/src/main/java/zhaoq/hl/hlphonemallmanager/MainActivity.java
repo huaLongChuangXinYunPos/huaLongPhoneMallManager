@@ -2,22 +2,16 @@ package zhaoq.hl.hlphonemallmanager;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
 import zhaoq.hl.hlphonemallmanager.activity.BrandManageActivity;
-import zhaoq.hl.hlphonemallmanager.db.MySqliteHelper;
 import zhaoq.hl.hlphonemallmanager.entity.RequestDataEntity;
-import zhaoq.hl.hlphonemallmanager.entity.LoginUserEntitiy;
 import zhaoq.hl.hlphonemallmanager.activity.GoodsInfoActivity;
 import zhaoq.hl.hlphonemallmanager.activity.SellQueryActivity;
 import zhaoq.hl.hlphonemallmanager.tasks.MainDownInfoAsyncTask;
@@ -25,7 +19,7 @@ import zhaoq.hl.hlphonemallmanager.tasks.TaskCallBack;
 import zhaoq.hl.hlphonemallmanager.tasks.TaskResult;
 import zhaoq.hl.hlphonemallmanager.activity.TicketManageActivity;
 import zhaoq.hl.hlphonemallmanager.utils.ApplicationUtils;
-import zhaoq.hl.hlphonemallmanager.utils.MyToast;
+import zhaoq.hl.hlphonemallmanager.utils.MyToastUtils;
 import zhaoq.hl.hlphonemallmanager.utils.StateUtils;
 
 public class MainActivity extends BaseActivity implements TaskCallBack {
@@ -148,11 +142,11 @@ public class MainActivity extends BaseActivity implements TaskCallBack {
         switch (result.result_status) {
 
             case -1:
-                MyToast.ToastIncenter(this, "加载失败,请检查服务器").show();
+                MyToastUtils.toastInCenter(this, "加载失败,请检查服务器").show();
                 break;
 
             case 1:
-                MyToast.ToastIncenter(this, "更新成功").show();
+                MyToastUtils.toastInCenter(this, "更新成功").show();
                 break;
 
             default:

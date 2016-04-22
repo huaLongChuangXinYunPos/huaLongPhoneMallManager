@@ -41,8 +41,14 @@
             android:name=".activity.GoodsInfoActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             />
+
         <activity
             android:name=".activity.SellQueryActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            />
+
+        <activity
+            android:name=".activity.AddGoodsActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             />
     </application>

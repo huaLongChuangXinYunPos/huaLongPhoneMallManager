@@ -32,7 +32,6 @@ import zhaoq.hl.hlphonemallmanager.dialog.SelectGoodsDialog;
 import zhaoq.hl.hlphonemallmanager.entity.DownBrandEntity;
 import zhaoq.hl.hlphonemallmanager.entity.DownGUIGUGoodsEntiity;
 import zhaoq.hl.hlphonemallmanager.utils.ApplicationUtils;
-import zhaoq.hl.hlphonemallmanager.utils.MyToast;
 import zhaoq.hl.hlphonemallmanager.utils.MyToastUtils;
 import zhaoq.hl.hlphonemallmanager.utils.NumUtils;
 
@@ -137,9 +136,9 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
 
     private ArrayList<DownBrandEntity> listBrand;  //存放品牌号
 
-    private ArrayList<DownGUIGUGoodsEntiity> listGoods; //存放  商品
+    private ArrayList<DownGUIGUGoodsEntiity> listGoods; //存放  点击图标2获取的商品  商品
 
-    private ArrayList<DownGUIGUGoodsEntiity> selectExtralGoodslist; //选择确切的    商品数据
+    private ArrayList<DownGUIGUGoodsEntiity> selectExtralGoodslist; //点击添加按钮  存放获取的  商品数据
 
     private static ArrayList<DownGUIGUGoodsEntiity> adapterList;
     private static TicketsListAdapter adapter;
@@ -199,13 +198,13 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
                     if(str1.matches("[0-9]+") && str.matches("[0-9]+")){ //品牌号为数字    商品号为数字
                          cursor = db.query(MySqliteHelper.TABLE_GOODS_NAME,new String[]{"*"},
                                 "pinpaino = '"+ str1 +"' and Dw1 = '"+ str +"'",null,null,null,null);
-                    }else if(str1.matches("[0-9]+") && !str.matches("[0-9]+")){ //品牌号为数字  商品号为汉字
+                    }else if(str1.matches("[0-9.]+") && !str.matches("[0-9.]+")){ //品牌号为数字  商品号为汉字
                         cursor = db.query(MySqliteHelper.TABLE_GOODS_NAME,new String[]{"*"},
                                 "pinpaino = '"+ str1 +"' and Mingcheng like '%"+ str +"%'",null,null,null,null);
-                    }else if(!str1.matches("[0-9]+") && str.matches("[0-9]+")){//品牌号为汉字  商品号为数字
+                    }else if(!str1.matches("[0-9.]+") && str.matches("[0-9.]+")){//品牌号为汉字  商品号为数字
                         cursor = db.query(MySqliteHelper.TABLE_GOODS_NAME,new String[]{"*"},
                                 "pinpai like '%"+ str1 +"%' and Dw1 = '"+ str +"'",null,null,null,null);
-                    }else if(!str1.matches("[0-9]+") && !str.matches("[0-9]+")){//品牌号为汉字  商品号为汉字
+                    }else if(!str1.matches("[0-9.]+") && !str.matches("[0-9.]+")){//品牌号为汉字  商品号为汉字
                         cursor = db.query(MySqliteHelper.TABLE_GOODS_NAME,new String[]{"*"},
                                 "pinpai like '%"+ str1 +"%' and Mingcheng like '%"+ str +"%'",null,null,null,null);
                     }
@@ -240,7 +239,7 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
 
                 switch(cursor.getCount()){
                     case 0:
-                        MyToast.ToastIncenter(this,"无此商品数据，请检查输入信息").show();
+                        MyToastUtils.toastInCenter(this, "无此商品数据，请检查输入信息").show();
                         break;
                     case 1:
                         //获取  数据
@@ -265,7 +264,7 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
                             selectExtralGoodslist.add(downGUIGUGoodsEntiity);
                         }
                         //弹出 对话框 让用户选择：
-                        if(listGoods.size()!=0){
+                        if(selectExtralGoodslist.size()!=0){
                             //弹出选择对话框
                             new SelectExtralGoodsDialog(this,R.style.LoginAlertDialogStyle,selectExtralGoodslist).show();
                         }else{
@@ -306,7 +305,7 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
      * @param position
      */
     @Override
-    public void dialogCallback(int position,String authority) {
+    public void dialogCallbackSelectedItem(int position,String authority) {
         switch(authority){
             case SelectBrandDialog.selectBrandDialog:
                 brandNo.setText(listBrand.get(position).getPinpai());
@@ -318,7 +317,7 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
                 amount.setText("1");
                 break;
 
-            case SelectExtralGoodsDialog.selectExtralGoodsDialog:
+            case SelectExtralGoodsDialog.AUTHORITY:
                 DownGUIGUGoodsEntiity dao = selectExtralGoodslist.get(position);
                 dao.setBzlsj(Double.parseDouble(unitPrice.getText().toString().trim()));
                 dao.setAmount(amount.getText().toString().trim());
@@ -329,6 +328,9 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
             default:
                 break;
         }
+    }
+    @Override
+    public void dialogCallbackInputDate(DownBrandEntity result,String authority) {
     }
 
     private void showPopWindow(View view, final int position) {
@@ -380,6 +382,8 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         //弹出  菜单popwindow：
 //        showPopWindow(view, position);
+//        TODO  处理  item的  点击事件
         Log.i("info","====================");
     }
+
 }

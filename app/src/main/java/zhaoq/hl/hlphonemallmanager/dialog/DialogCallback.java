@@ -1,5 +1,8 @@
 package zhaoq.hl.hlphonemallmanager.dialog;
 
+import zhaoq.hl.hlphonemallmanager.entity.DownBrandEntity;
+import zhaoq.hl.hlphonemallmanager.entity.DownGUIGUGoodsEntiity;
+
 /**
  * PACKAGE_NAME:zhaoq.hl.hlphonemallmanager.dialog
  * CREATE_BY:zhaoqiang
@@ -7,5 +10,7 @@ package zhaoq.hl.hlphonemallmanager.dialog;
  * DATE: 2016/04/21  09:42
  */
 public interface DialogCallback {
-    void dialogCallback(int position,String authority);
+    void dialogCallbackSelectedItem(int position,String authority);
+
+    void dialogCallbackInputDate(DownBrandEntity brand,String authority);
 }

@@ -65,13 +65,13 @@
                 android:textColor="@color/black"
                 />
             <EditText
-                android:id="@+id/edit_account"
+                android:id="@+id/goods_input_no"
                 style="@style/LoginEdittextStyle"
                 android:hint="请输入商品名称信息"
                 android:background="@color/white"
                 />
             <ImageView
-                android:id="@+id/image_query_ic1"
+                android:id="@+id/goods_query_ic"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerVertical="true"
@@ -89,12 +89,6 @@
             />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8"
-        android:background="@color/lowGray"
-        >
         <include
             layout="@layout/goods_info_list_title"
             />
@@ -103,18 +97,19 @@
             android:id="@+id/goods_info_list"
             android:dividerHeight="1dp"
             android:divider="@color/login_bg"
-            android:headerDividersEnabled="true"
+            android:headerDividersEnabled="false"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="7"
+            android:listSelector="#FD8900"
+            android:background="@color/lowGray"
             android:footerDividersEnabled="true"
             />
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="2.5"
         android:background="@color/login_bg"
         android:orientation="vertical"
         android:paddingBottom="4dp"
@@ -124,18 +119,28 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             >
+
             <Button
-                style="@style/LoginBtnStyle"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="增加"
-                />
-            <Button
+                android:id="@+id/goods_update_info"
                 style="@style/LoginBtnStyle"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="修改"
                 />
+            <Button
+                android:id="@+id/goods_add_info"
+                style="@style/LoginBtnStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="增加"
+                />
+            <!--<Button-->
+                <!--android:id="@+id/goods_delete_info"-->
+                <!--style="@style/LoginBtnStyle"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="删除"-->
+                <!--/>-->
         </LinearLayout>
 
         <LinearLayout

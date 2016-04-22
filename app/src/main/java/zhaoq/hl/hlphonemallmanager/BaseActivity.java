@@ -1,17 +1,14 @@
 package zhaoq.hl.hlphonemallmanager;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import zhaoq.hl.hlphonemallmanager.entity.LoginUserEntitiy;
 import zhaoq.hl.hlphonemallmanager.utils.ApplicationUtils;
-import zhaoq.hl.hlphonemallmanager.utils.MyToast;
+import zhaoq.hl.hlphonemallmanager.utils.MyToastUtils;
 
 /**
  * PACKAGE_NAME:zhaoq.hl.hlphonemallmanager
@@ -60,7 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         if(keyCode ==KeyEvent.KEYCODE_BACK &&
                 event.getAction() == KeyEvent.ACTION_DOWN){
             if((System.currentTimeMillis() - exitTime)>2000){
-                MyToast.ToastIncenter(this, "再按一次退出程序").show();
+                MyToastUtils.toastInBottom(this, "再按一次退出程序").show();
                 exitTime = System.currentTimeMillis();
             }else{
                 finish();

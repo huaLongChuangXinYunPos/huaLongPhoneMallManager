@@ -15,7 +15,7 @@ import zhaoq.hl.hlphonemallmanager.db.MySqliteHelper;
 import zhaoq.hl.hlphonemallmanager.dialog.InputInfoDialog;
 import zhaoq.hl.hlphonemallmanager.entity.LoginUserEntitiy;
 import zhaoq.hl.hlphonemallmanager.utils.ApplicationUtils;
-import zhaoq.hl.hlphonemallmanager.utils.MyToast;
+import zhaoq.hl.hlphonemallmanager.utils.MyToastUtils;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     //判断  数据：
                     switch(cursor.getCount()){
                         case 0:
-                            MyToast.ToastIncenter(this,"登录失败,未查询到该用户").show();
+                            MyToastUtils.toastInCenter(this, "登录失败,未查询到该用户").show();
                             break;
                         case 1:
                             while(cursor.moveToNext()){
@@ -82,12 +82,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                     toMainActivity();
                                 }else{
-                                    MyToast.ToastIncenter(this,"登录失败,请验证输入密码").show();
+                                    MyToastUtils.toastInCenter(this, "登录失败,请验证输入密码").show();
                                 }
                             }
                             break;
                         default:
-                            MyToast.ToastIncenter(this,"登录失败,请验证账号或密码").show();
+                            MyToastUtils.toastInCenter(this, "登录失败,请验证账号或密码").show();
                             break;
                     }
                 }
@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(keyCode ==KeyEvent.KEYCODE_BACK &&
                 event.getAction() == KeyEvent.ACTION_DOWN){
             if((System.currentTimeMillis() - exitTime)>2000){
-                MyToast.ToastIncenter(this, "再按一次推出程序").show();
+                MyToastUtils.toastInCenter(this, "再按一次推出程序").show();
                 exitTime = System.currentTimeMillis();
             }else{
                 finish();
@@ -137,7 +137,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if((!TextUtils.isEmpty(account))&&(!TextUtils.isEmpty(password))){
             return  true;
         }else{
-            MyToast.ToastIncenter(getApplicationContext(), "输入数据不准为空").show();
+            MyToastUtils.toastInCenter(getApplicationContext(), "输入数据不准为空").show();
         }
         return false;
     }

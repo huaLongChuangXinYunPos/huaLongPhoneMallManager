@@ -117,8 +117,8 @@
                 />
             <Button
                 android:id="@+id/btn_loaddata"
-                android:text="点击输入柜组信息加载数据"
-                android:textSize="20sp"
+                android:text="第一次使用请先加载数据"
+                android:textSize="18sp"
                 style="@style/LoginBtnStyle"
                 />
         </LinearLayout>

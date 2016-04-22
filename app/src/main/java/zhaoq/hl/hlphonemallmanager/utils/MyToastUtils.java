@@ -14,8 +14,16 @@ public class MyToastUtils {
 
     //自定义 toast工具类
     public static Toast toastInCenter(Context context,String message){
-        Toast toast = Toast.makeText(context,message,Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(context,message,Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER,0,0);
         return toast;
     }
+
+    //自定义 toast工具类
+    public static Toast toastInBottom(Context context,String message){
+        Toast toast = Toast.makeText(context,message,Toast.LENGTH_SHORT);
+        return toast;
+    }
+
+
 }

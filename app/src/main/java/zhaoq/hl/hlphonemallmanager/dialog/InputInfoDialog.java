@@ -18,7 +18,7 @@ import zhaoq.hl.hlphonemallmanager.entity.RequestDataEntity;
 import zhaoq.hl.hlphonemallmanager.tasks.InitLoginUserinfoAsyncTask;
 import zhaoq.hl.hlphonemallmanager.tasks.TaskCallBack;
 import zhaoq.hl.hlphonemallmanager.tasks.TaskResult;
-import zhaoq.hl.hlphonemallmanager.utils.MyToast;
+import zhaoq.hl.hlphonemallmanager.utils.MyToastUtils;
 import zhaoq.hl.hlphonemallmanager.utils.StateUtils;
 
 /**
@@ -109,7 +109,7 @@ public class InputInfoDialog extends Dialog implements View.OnClickListener,Task
         if((!TextUtils.isEmpty(account))&&(!TextUtils.isEmpty(password))){
             return  true;
         }else{
-            MyToast.ToastIncenter(context.getApplicationContext(), "输入数据不准为空").show();
+            MyToastUtils.toastInCenter(context.getApplicationContext(), "输入数据不准为空").show();
         }
         return false;
     }
@@ -118,19 +118,19 @@ public class InputInfoDialog extends Dialog implements View.OnClickListener,Task
     public void taskFinished(TaskResult result) {
         switch (result.result_status){
             case -1:
-                MyToast.ToastIncenter(context,"加载失败,请检查服务器").show();
+                MyToastUtils.toastInCenter(context, "加载失败,请检查服务器").show();
                 break;
             case 1:
-                MyToast.ToastIncenter(context,"加载成功,可以登录").show();
+                MyToastUtils.toastInCenter(context, "加载成功,可以登录").show();
                 break;
             case 2:
-                MyToast.ToastIncenter(context,"加载失败,柜组密码错误").show();
+                MyToastUtils.toastInCenter(context, "加载失败,柜组密码错误").show();
                 break;
             case 3:
-                MyToast.ToastIncenter(context,"加载失败,当前柜组已被绑定其他手机").show();
+                MyToastUtils.toastInCenter(context, "加载失败,当前柜组已被绑定其他手机").show();
                 break;
             case 4:
-                MyToast.ToastIncenter(context,"加载失败,当前柜组信息不属于该手机").show();
+                MyToastUtils.toastInCenter(context, "加载失败,当前柜组信息不属于该手机").show();
                 break;
             default:
                 break;

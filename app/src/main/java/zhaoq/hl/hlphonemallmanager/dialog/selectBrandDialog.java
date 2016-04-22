@@ -8,12 +8,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import zhaoq.hl.hlphonemallmanager.R;
-import zhaoq.hl.hlphonemallmanager.entity.DownGUIGUGoodsEntiity;
+import zhaoq.hl.hlphonemallmanager.entity.DownBrandEntity;
 
 /**
  * PACKAGE_NAME:zhaoq.hl.hlphonemallmanager.dialog
@@ -21,15 +20,16 @@ import zhaoq.hl.hlphonemallmanager.entity.DownGUIGUGoodsEntiity;
  * AUTHOR_EMAIL:zhaoq_hero@163.com
  * DATE: 2016/04/20  16:37
  */
-public class SelectGoodsDialog extends Dialog implements AdapterView.OnItemClickListener {
+public class SelectBrandDialog extends Dialog implements AdapterView.OnItemClickListener {
 
-    private ArrayList<DownGUIGUGoodsEntiity> list;
+    private ArrayList<DownBrandEntity> list;
     private Context context;
+
 
     private View view;
 
     //构造器
-    public SelectGoodsDialog(Context context, int style, ArrayList<DownGUIGUGoodsEntiity> list) {
+    public SelectBrandDialog(Context context,int style,ArrayList<DownBrandEntity> list) {
         super(context,style);
         this.list = list;
         this.context = context;
@@ -46,9 +46,6 @@ public class SelectGoodsDialog extends Dialog implements AdapterView.OnItemClick
         view = LayoutInflater.from(context).inflate(R.layout.select_brand_dialog,null);
         setContentView(view);
 
-        TextView textTitle = (TextView) view.findViewById(R.id.title_dialog);
-        textTitle.setText("选择商品");
-
         listView = (ListView) view.findViewById(R.id.list_view);
 
         initList();
@@ -63,16 +60,16 @@ public class SelectGoodsDialog extends Dialog implements AdapterView.OnItemClick
     private void initList() {
         list2 = new ArrayList<String>();
         for(int i=0;i<list.size();i++){
-            list2.add(list.get(i).getMingcheng());
+            list2.add(list.get(i).getPinpai());
         }
     }
 
-    public static final String selectGoodsDialog = "SELECT_GOODS_DIALOG";
+    public static final String selectBrandDialog = "SELECT_BRAND_DIALOG";
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         //回调  回去
-        callback.dialogCallbackSelectedItem(position,selectGoodsDialog);
+        callback.dialogCallbackSelectedItem(position,selectBrandDialog);
         this.dismiss();
     }
 
