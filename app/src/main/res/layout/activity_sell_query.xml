@@ -64,11 +64,17 @@
                 android:textSize="25sp"
                 android:textColor="@color/black"
                 />
-            <EditText
-                android:id="@+id/edit_account"
+            <TextView
+                android:id="@+id/input_start_time"
                 style="@style/LoginEdittextStyle"
-                android:hint="选择日期"
-                android:background="@color/white"
+                android:textSize="15sp"
+                android:hint="sdsd"
+                android:paddingLeft="3dp"
+                android:focusable="true"
+                android:textColor="@drawable/dialog_text_selector"
+                android:gravity="bottom"
+                android:clickable="true"
+                android:layout_height="match_parent"
                 />
             <TextView
                 style="@style/LoginTextStyle"
@@ -76,21 +82,17 @@
                 android:textSize="25sp"
                 android:textColor="@color/black"
                 />
-            <EditText
-                style="@style/LoginEdittextStyle"
-                android:hint="选择日期"
-                android:background="@color/white"
-                />
-            <ImageView
-                android:id="@+id/image_query_ic1"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_centerVertical="true"
-                android:focusable="false"
-                android:layout_marginLeft="2dp"
+            <TextView
+                android:id="@+id/input_end_time"
+                android:textSize="15sp"
+                android:hint="sdsd"
+                android:paddingLeft="3dp"
                 android:clickable="true"
-                android:background="@drawable/query_ic_selector"
-                android:layout_marginBottom="5dp"
+                android:focusable="false"
+                android:textColor="@drawable/dialog_text_selector"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                style="@style/LoginEdittextStyle"
                 />
         </LinearLayout>
         <View
@@ -112,13 +114,14 @@
                 android:textColor="@color/black"
                 />
             <EditText
-                android:id="@+id/edit_password"
+                android:id="@+id/input_brandno"
                 style="@style/LoginEdittextStyle"
                 android:hint="请输入品牌编号"
+                android:inputType="numberDecimal"
                 android:background="@color/white"
                 />
             <ImageView
-                android:id="@+id/image_query_ic2"
+                android:id="@+id/query_ic"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerVertical="true"
@@ -136,28 +139,21 @@
             />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8"
-        android:background="@color/lowGray"
-        >
+    <include
+         layout="@layout/sell_query_list_title"
+         />
 
-        <include
-            layout="@layout/sell_query_list_title"
-            />
-
-        <ListView
-            android:id="@+id/sell_query_listview"
-            android:dividerHeight="1dp"
-            android:divider="@color/login_bg"
-            android:headerDividersEnabled="true"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:footerDividersEnabled="true"
-            />
-    </LinearLayout>
+    <ListView
+         android:id="@+id/sell_query_listview"
+         android:dividerHeight="1dp"
+         android:divider="@color/login_bg"
+         android:headerDividersEnabled="true"
+         android:layout_width="match_parent"
+         android:background="@color/lowGray"
+         android:layout_height="0dp"
+         android:layout_weight="6"
+         android:footerDividersEnabled="true"
+         />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -46,7 +46,7 @@ public class SelectExtralGoodsDialog extends Dialog implements AdapterView.OnIte
         view = LayoutInflater.from(context).inflate(R.layout.select_brand_dialog,null);
         setContentView(view);
         TextView textTitle = (TextView) view.findViewById(R.id.title_dialog);
-        textTitle.setText("选择商品");
+        textTitle.setText("该商品有多种规格:");
 
         listView = (ListView) view.findViewById(R.id.list_view);
 

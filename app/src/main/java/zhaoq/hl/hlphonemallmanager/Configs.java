@@ -21,6 +21,10 @@ public final class Configs {
     public static final String MAIN_DOWN_INFO_URL =
             "http://192.168.3.200:1236/MpServer/AppPubServer.asmx/GetGuizuInfor?";
 
+    //柜组  销售查询url:
+    public static final String SELL_QUERY_URL =
+            "http://192.168.3.200:1236/MpServer/AppPubServer.asmx/GetGuizuSale?";
+
     //获取  柜组信息号的  异步任务标识
     public static final int GET_GUIZU_INFO_AUTHORITY = 1;
 

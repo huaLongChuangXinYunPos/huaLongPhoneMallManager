@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
+import zhaoq.hl.hlphonemallmanager.entity.BrandSellInfoEntity;
 import zhaoq.hl.hlphonemallmanager.entity.DownBrandEntity;
 import zhaoq.hl.hlphonemallmanager.entity.DownGUIGUGoodsEntiity;
 import zhaoq.hl.hlphonemallmanager.entity.DownGUIZUInfo;
@@ -60,6 +61,18 @@ public final class JSONUtils {
         ArrayList<DownGUIGUGoodsEntiity> list = null;
         Gson gson = new Gson();
         list = gson.fromJson(array.toString(), new TypeToken<List<DownGUIGUGoodsEntiity>>(){}.getType());
+        return list;
+    }
+
+    /**
+     * 解析  数据信息
+     * @param array
+     * @return
+     */
+    public static ArrayList<BrandSellInfoEntity> parseBrandSellInfo(JSONArray array) {
+        ArrayList<BrandSellInfoEntity> list = null;
+        Gson gson = new Gson();
+        list = gson.fromJson(array.toString(),new TypeToken<List<BrandSellInfoEntity>>(){}.getType());
         return list;
     }
 }

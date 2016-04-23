@@ -50,7 +50,7 @@ public final class ClientApi {
      * 主界面  中初始化    下载数据信息
      * @return
      */
-    public static JSONObject getGUIZUinfo(String data,String downP){
+    public static JSONObject getGUIZUinfo(String data,String action){
         JSONObject ret = null;
         HashMap<String,String> map = new HashMap<String,String>();
         map.put("name",data);
@@ -69,4 +69,24 @@ public final class ClientApi {
         return null;
     }
 
+    //获取  创建销售情况的   查询信息表
+    public static JSONObject getSellGoodsInfoinfo(String data) {
+        JSONObject ret  = null;
+        HashMap<String,String> map = new HashMap<>();
+        map.put("name",data);
+
+        byte[] bytes = HttpTools.doPost(Configs.SELL_QUERY_URL,map);
+        if(bytes!=null){
+            try {
+                String str = new String(bytes,"utf-8");
+                ret = new JSONObject(str);
+                return ret;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 }

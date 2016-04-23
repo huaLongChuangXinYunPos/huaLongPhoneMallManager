@@ -69,7 +69,7 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
         print = (Button) findViewById(R.id.save_and_print);
         updateInfo = (Button) findViewById(R.id.tickets_up_info_btn);
 
-        listView = (ListView) findViewById(R.id.tickets_managment_goods_list);  //查询  到listView
+        listView = (ListView) findViewById(R.id.tickets_ma_goods_list);  //查询  到listView
 
         adapterList = new ArrayList<DownGUIGUGoodsEntiity>();
         adapter = new TicketsListAdapter(this,adapterList);
@@ -195,7 +195,7 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
                     String str = goodsNo.getText().toString().trim(); //获取  输入内容  货号
                     // 执行查询：
                     Cursor cursor = null;
-                    if(str1.matches("[0-9]+") && str.matches("[0-9]+")){ //品牌号为数字    商品号为数字
+                    if(str1.matches("[0-9.]+") && str.matches("[0-9.]+")){ //品牌号为数字    商品号为数字
                          cursor = db.query(MySqliteHelper.TABLE_GOODS_NAME,new String[]{"*"},
                                 "pinpaino = '"+ str1 +"' and Dw1 = '"+ str +"'",null,null,null,null);
                     }else if(str1.matches("[0-9.]+") && !str.matches("[0-9.]+")){ //品牌号为数字  商品号为汉字
@@ -231,6 +231,7 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
                 break;
 
             case R.id.btn_add:
+                //检测  是否已经被添加：
                 //添加  商品按钮
                 //更新  listView中的内容  创建 商品类  //根据当前  品牌和  货号 查询商品
                 Cursor cursor = db.query(MySqliteHelper.TABLE_GOODS_NAME,new String[]{"*"}
@@ -239,17 +240,21 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
 
                 switch(cursor.getCount()){
                     case 0:
-                        MyToastUtils.toastInCenter(this, "无此商品数据，请检查输入信息").show();
+                        MyToastUtils.toastInCenter(this, "未查询到当前商品").show();
                         break;
                     case 1:
                         //获取  数据
                         DownGUIGUGoodsEntiity  entiity = null;
                         while(cursor.moveToNext()){
-                            entiity = CursorToEntity.getGoodsEntity(cursor);
-                            entiity.setBzlsj(Double.parseDouble(unitPrice.getText().toString().trim()));
-                            entiity.setAmount(amount.getText().toString().trim());
-                            entiity.setMoney(amount.getText().toString().trim());
-                            adapterList.add(entiity);
+                            if(checkIsAdd(cursor)){
+                                entiity = CursorToEntity.getGoodsEntity(cursor);
+                                entiity.setBzlsj(Double.parseDouble(unitPrice.getText().toString().trim()));
+                                entiity.setAmount(amount.getText().toString().trim());
+                                entiity.setMoney(amount.getText().toString().trim());
+                                adapterList.add(entiity);
+                            }else{
+                                MyToastUtils.toastInCenter(this,"添加失败，当前商品已存在于列表中").show();
+                            }
                         }
                         adapter.notifyDataSetChanged();
                         break;
@@ -288,6 +293,17 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
         }
     }
 
+    //检查  是否已经被添加进过集合中
+    private boolean checkIsAdd(Cursor cursor) {
+        String spno = cursor.getString(cursor.getColumnIndex("SpNo"));
+        for(int i=0;i<adapterList.size();i++){
+            if(spno.equals(adapterList.get(i).getSpNo())){
+                return false;
+            }
+        }
+        return true;
+    }
+
     //检查  数据
     private boolean checkInput(EditText editText) {
         String str = editText.getText().toString().trim();
@@ -306,7 +322,7 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
      */
     @Override
     public void dialogCallbackSelectedItem(int position,String authority) {
-        switch(authority){
+        point:switch(authority){
             case SelectBrandDialog.selectBrandDialog:
                 brandNo.setText(listBrand.get(position).getPinpai());
                 break;
@@ -322,6 +338,13 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
                 dao.setBzlsj(Double.parseDouble(unitPrice.getText().toString().trim()));
                 dao.setAmount(amount.getText().toString().trim());
                 dao.setMoney(amount.getText().toString().trim());
+
+                for(int i=0;i<adapterList.size();i++){
+                    if (adapterList.get(i).getSpNo().equals(dao.getSpNo())){
+                        MyToastUtils.toastInCenter(this,"添加失败，当前商品已存在于列表中").show();
+                        break point;
+                    }
+                }
                 adapterList.add(dao);
                 adapter.notifyDataSetChanged();
                 break;

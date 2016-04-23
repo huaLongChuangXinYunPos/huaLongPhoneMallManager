@@ -83,7 +83,8 @@ public class GoodsListAdapter extends BaseAdapter {
         holder.text2.setText(list.get(position).getMingcheng());
         holder.text3.setText(list.get(position).getPinpaino());
         holder.text4.setText(list.get(position).getPinpai());
-        holder.text5.setText(list.get(position).getDanwei());
+        holder.text5.setText((list.get(position).getDanwei().equals("") ||list.get(position).getDanwei() ==null)?
+                                            "无":list.get(position).getDanwei());
         holder.text6.setText(list.get(position).getDw1());
         holder.text7.setText(NumUtils.getFormatedNum(list.get(position).getBzlsj()));
 

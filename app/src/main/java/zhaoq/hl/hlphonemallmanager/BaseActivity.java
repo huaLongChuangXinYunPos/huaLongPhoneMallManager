@@ -1,5 +1,6 @@
 package zhaoq.hl.hlphonemallmanager;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -22,6 +23,9 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     private static LoginUserEntitiy user;
 
     private TextView guizuNo,guizuName,memberNo,memberName;
+
+    private SQLiteDatabase db;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +37,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
         ApplicationUtils.getInstance().addActivity(this);
         user = ApplicationUtils.getInstance().getUser();
+        db = ApplicationUtils.getInstance().getHelper(this).getWritableDatabase();
 
         guizuNo.setText("柜组编号:"+user.getGuizuno());
         guizuName.setText("柜组名称:"+ user.getGuizu());
@@ -66,5 +71,13 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(db!=null && db.isOpen()){
+            db.close();
+        }
+        super.onDestroy();
     }
 }

@@ -10,38 +10,47 @@
               android:layout_height="wrap_content" >
 
     <TextView
-        android:id="@+id/text_code_id"
+        android:id="@+id/text1"
         style="@style/ListTitleStyle"
-        android:layout_weight="1.5"
+        android:singleLine="true"
+        android:layout_weight="2"
         android:text="销售单No" />
 
     <TextView
-        android:id="@+id/text_goods_name"
+        android:id="@+id/text8"
         style="@style/ListTitleStyle"
-        android:layout_weight="1.5"
-        android:text="商品名称" />
+        android:singleLine="false"
+        android:layout_weight="1"
+        android:text="日期" />
 
     <TextView
-        android:id="@+id/text_goods_no"
+        android:id="@+id/text2"
+        style="@style/ListTitleStyle"
+        android:layout_weight="1.8"
+        android:text="商品" />
+
+    <TextView
+        android:id="@+id/text3"
         style="@style/ListTitleStyle"
         android:text="货号" />
 
     <TextView
+        android:id="@+id/text4"
         style="@style/ListTitleStyle"
         android:text="单位" />
 
     <TextView
-        android:id="@+id/text_price"
+        android:id="@+id/text5"
         style="@style/ListTitleStyle"
         android:text="单价" />
 
     <TextView
-        android:id="@+id/text_amount"
+        android:id="@+id/text6"
         style="@style/ListTitleStyle"
         android:text="数量" />
 
     <TextView
-        android:id="@+id/text_money"
+        android:id="@+id/text7"
         style="@style/ListTitleStyle"
         android:text="金额" />
 

@@ -68,8 +68,13 @@ public class SelectExtralGoodsDialogAdapter extends BaseAdapter {
         //绑定数据
 
         holder.title.setText((position+1)+","+list.get(position).getMingcheng() +" 牌子:"+list.get(position).getPinpai());
-        holder.info.setText("  单价:"+ NumUtils.getFormatedNum(list.get(position).getBzlsj())+ "(元/" + list.get(position).getDanwei()+")");
-        holder.no.setText("商品号:"+list.get(position).getPinpaino());
+        holder.info.setText("  单价:"+ NumUtils.getFormatedNum(list.get(position).getBzlsj())+ "(元" +(
+                (list.get(position).getDanwei().equals("")||list.get(position).getDanwei()==null)? "" :("/"+list.get(position).getDanwei()))
+                +")");
+        holder.no.setText("商品号:"+list.get(position).getPinpaino() +
+                ",规格:"+((list.get(position).getGuige().equals("")||list.get(position).getGuige()==null)?
+                        "无":list.get(position).getGuige())
+        );
 
         return convertView;
     }

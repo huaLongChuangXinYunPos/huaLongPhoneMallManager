@@ -56,14 +56,13 @@
         />
 
     <ListView
-        android:id="@+id/tickets_managment_goods_list"
+        android:id="@+id/tickets_ma_goods_list"
         android:dividerHeight="1dp"
         android:divider="@color/login_bg"
         android:headerDividersEnabled="false"
         android:background="@color/lowGray"
         android:layout_width="match_parent"
-        android:clickable="true"
-        android:descendantFocusability="beforeDescendants"
+        android:listSelector="@color/list_view_pressed"
         android:layout_height="0dp"
         android:layout_weight="7"
         android:footerDividersEnabled="true"

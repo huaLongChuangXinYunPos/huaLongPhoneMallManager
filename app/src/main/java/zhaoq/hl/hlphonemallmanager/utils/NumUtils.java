@@ -31,4 +31,16 @@ public final class NumUtils {
         bd = bd.setScale(2,BigDecimal.ROUND_HALF_UP);
         return bd;
     }
+
+    public static String getFormatedNum(String numStr){
+        if(numStr != null && !numStr.equals("") && numStr.contains(".")){
+            while(numStr.endsWith("0")){
+                numStr = numStr.substring(0,numStr.length()-1);
+            }
+        }
+        if (numStr.endsWith(".")){
+            numStr = numStr.substring(0,numStr.length()-1);
+        }
+        return numStr;
+    }
 }

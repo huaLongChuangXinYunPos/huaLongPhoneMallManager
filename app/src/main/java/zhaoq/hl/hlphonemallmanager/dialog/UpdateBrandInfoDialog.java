@@ -84,7 +84,7 @@ public class UpdateBrandInfoDialog extends Dialog implements View.OnClickListene
                         MyToastUtils.toastInBottom(context,"当前未做任何修改").show();
                     }else{
                         SQLiteDatabase db = ApplicationUtils.getInstance().getHelper(context).getWritableDatabase();
-                        //TODO 应当  在校验一次  当前号的信息是否重复 添加
+                        //TODO 保存时 应当  在校验一次  当前号的信息是否重复 添加
 
                         //修改  数据库信息
                         db.execSQL("update " + MySqliteHelper.TABLE_BRAND_NAME

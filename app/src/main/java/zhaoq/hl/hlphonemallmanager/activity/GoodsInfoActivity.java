@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -88,6 +90,10 @@ public class GoodsInfoActivity extends BaseActivity implements DialogCallback, A
 
     private ArrayList<DownGUIGUGoodsEntiity> selectExtralGoodslist; //选择确切的    商品数据
 
+    public static final String updateAuthority = "UPDATE_INFO";
+
+    public static final String addAuthority = "ADD_INFO";
+
     @Override
     protected void myOnclick(View v) {
         switch(v.getId()){
@@ -153,15 +159,25 @@ public class GoodsInfoActivity extends BaseActivity implements DialogCallback, A
                 //录入品牌信息
                 Intent intent = new Intent();
                 intent.setClass(this,AddGoodsActivity.class);
-                startActivityForResult(intent,REQUEST_CODE);
+                intent.putExtra("authority", addAuthority);
+                startActivityForResult(intent, REQUEST_CODE);
 
                 break;
 
             case R.id.goods_update_info:
                 //更新信息
                 if(isSelect){
-                    //
+                    // 修改当前商品信息项
+                    Intent in = new Intent();
+                    in.setClass(this, AddGoodsActivity.class);
+                    //添加  标识
+                    in.putExtra("authority", updateAuthority);
+                    //传递  选中数据
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("dao",daolist.get(selectedPosition));
+                    in.putExtra("bundle",bundle);
 
+                    startActivityForResult(in, REQUEST_CODE);
                 }else{
                     MyToastUtils.toastInCenter(this,"请先选中一项商品").show();
                 }
@@ -180,11 +196,19 @@ public class GoodsInfoActivity extends BaseActivity implements DialogCallback, A
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         switch(resultCode){
-
             case AddGoodsActivity.RESULT_CODE:
-
+                //
+                if( data != null && requestCode == REQUEST_CODE ){
+                    Bundle bundle = data.getExtras();
+                    DownGUIGUGoodsEntiity dao = (DownGUIGUGoodsEntiity) bundle.getSerializable("dao");
+                    if(AddGoodsActivity.authority.equals(updateAuthority)){  //当前 是刷新 页面的返回值
+                        daolist.set(selectedPosition,dao);
+                    }else{
+                        daolist.add(dao);
+                    }
+                    adapter.notifyDataSetChanged();
+                }
                 break;
 
             default:

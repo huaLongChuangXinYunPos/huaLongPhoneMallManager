@@ -1,7 +1,8 @@
 package zhaoq.hl.hlphonemallmanager.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,9 +11,11 @@ import android.widget.ImageView;
 
 import zhaoq.hl.hlphonemallmanager.BaseActivity;
 import zhaoq.hl.hlphonemallmanager.R;
-import zhaoq.hl.hlphonemallmanager.entity.DownBrandEntity;
+import zhaoq.hl.hlphonemallmanager.db.MySqliteHelper;
 import zhaoq.hl.hlphonemallmanager.entity.DownGUIGUGoodsEntiity;
+import zhaoq.hl.hlphonemallmanager.utils.ApplicationUtils;
 import zhaoq.hl.hlphonemallmanager.utils.MyToastUtils;
+import zhaoq.hl.hlphonemallmanager.utils.NumUtils;
 
 public class AddGoodsActivity extends BaseActivity {
 
@@ -41,6 +44,8 @@ public class AddGoodsActivity extends BaseActivity {
         icBack.setOnClickListener(this);
     }
 
+    public static String authority;
+
     private void initView() {
 
         icBack  = (ImageView) findViewById(R.id.ic_back);
@@ -59,6 +64,27 @@ public class AddGoodsActivity extends BaseActivity {
         btnSure = (Button) findViewById(R.id.goods_add_btn);
         queryIc = (ImageView) findViewById(R.id.goods_add_query);
 
+        authority = getIntent().getStringExtra("authority");
+
+        if(authority.equals(GoodsInfoActivity.updateAuthority)){
+            //设置 数据  直接显示  获取 bundle
+            Bundle bundle = getIntent().getBundleExtra("bundle");
+            DownGUIGUGoodsEntiity dao = (DownGUIGUGoodsEntiity) bundle.getSerializable("dao");
+
+            brandno.setText(( dao.getPinpaino() == null||dao.getPinpaino().equals(""))? "无":dao.getPinpaino());
+            brandname.setText(dao.getPinpai());
+            goodsSp.setText(dao.getSpNo());
+            goodsname.setText(dao.getMingcheng());
+            goodsdw1.setText(dao.getDw1());
+            goodsUnit.setText(( dao.getDanwei() == null||dao.getDanwei().equals(""))? "无":dao.getDanwei());
+            goodsOut.setText(NumUtils.getFormatedNum(dao.getBzlsj()));
+            goodsIn.setText(NumUtils.getFormatedNum(dao.getBzjj()));
+
+            businessName.setText("无");
+            businessNo.setText("无");
+
+            goodsSp.setEnabled(false);
+        }
     }
 
     @Override
@@ -71,20 +97,67 @@ public class AddGoodsActivity extends BaseActivity {
             case R.id.goods_add_btn:
                 //-----
                 if(checkInput()){
-                    DownGUIGUGoodsEntiity dao = new DownGUIGUGoodsEntiity();
+                    SQLiteDatabase db = ApplicationUtils.getInstance().getHelper(this).getWritableDatabase();
 
+                    DownGUIGUGoodsEntiity dao = new DownGUIGUGoodsEntiity();
+                    //设置数据
+                    dao.setSpNo(goodsSp.getText().toString().trim());
+                    dao.setMingcheng(goodsname.getText().toString().trim());
+                    dao.setDw1(goodsdw1.getText().toString().trim());
+                    dao.setDanwei(goodsUnit.getText().toString().trim());
+                    dao.setBzlsj(Double.parseDouble(NumUtils.getFormatFloat(goodsOut.getText().toString().trim()).toString()));
+                    dao.setBzjj(Double.parseDouble(NumUtils.getFormatFloat(goodsIn.getText().toString()).toString()));
+                    dao.setPinpaino(brandno.getText().toString().trim());
+                    dao.setPinpai(brandname.getText().toString().trim());
+                    dao.setGuizu(ApplicationUtils.getInstance().getUser().getGuizu());
+                    dao.setGuizuno(ApplicationUtils.getInstance().getUser().getGuizuno());
 
                     Intent intent = new Intent();
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("dao",dao);
+                    bundle.putSerializable("dao", dao);
                     intent.putExtras(bundle);
                     this.setResult(RESULT_CODE, intent);
-                    finish();
+                    //执行 当前  查询  如果当前
+                    //判断  标识 根据 标识 进行不同的处理：
+                    switch(authority){
+                        case GoodsInfoActivity.addAuthority:
+                            Cursor cursor = db.query(MySqliteHelper.TABLE_GOODS_NAME,new String[]{"*"},
+                                    " SpNo = '" + goodsSp.getText().toString().trim() + "'",null,null,null,null);
+                            //进行 一次判断  当前库中是否已经存在  该编号：
+                            if(cursor.getCount()==0){
+                                //保存数据到   本地仓库中
+                                db.execSQL(String.format(MySqliteHelper.INSERT_GOODS_INFO,
+                                        dao.getPinpai(), dao.getPinpaino(), dao.getGuizu(), dao.getGuizuno(),
+                                        dao.getDw1(), dao.getSpNo(), dao.getMingcheng(), dao.getBzjj(),
+                                        dao.getBzlsj(), dao.getDanwei(), dao.getGuige(), "0"));
+                                finish();
+                            }else{
+                                MyToastUtils.toastInCenter(this,"保存失败，当前商品编号已存在").show();
+                            }
+                            break;
+
+                        case GoodsInfoActivity.updateAuthority:
+                            //更新 数据
+                            //更新数据库信息
+                            db.execSQL("update " + MySqliteHelper.TABLE_GOODS_NAME + " set pinpai = '" + dao.getPinpai() +
+                                    "',pinpaino = '" + dao.getPinpaino() + "',guizu = '" + dao.getGuizu() +
+                                    "',guizuno = '" + dao.getGuizuno() + "',Dw1 = '" + dao.getDw1() +
+                                    "',Mingcheng = '" + dao.getMingcheng() + "',Bzjjmoney = '" + dao.getBzjj() +
+                                    "',Bzlsjmoney = '" + dao.getBzlsj() + "',Danwei = '" + dao.getDanwei() +
+                                    "',bNew = '0'  where SpNo = '" + goodsSp.getText().toString().trim() + "'");
+
+                            MyToastUtils.toastInCenter(this,"修改成功").show();
+
+                            finish();
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 break;
 
             case R.id.goods_add_query:
-
+                // TODO 查询图标    暂时 未处理
 
 
                 break;
@@ -94,66 +167,42 @@ public class AddGoodsActivity extends BaseActivity {
         }
     }
 
-//    pinpai  varchar(32), -- 品牌名称
-//    pinpaino varchar(32), -- 品牌编号
-//    guizu varchar(32), --柜组名称
-//    guizuno varchar(32), -- 柜组编号
-//    Dw1 varchar(32), -- 货号
-//    SpNo varchar(32), --商品编号
-//    Mingcheng varchar(64), --- 商品名称
-//    Bzjj money, -- 进价
-//    Bzlsj money,-- 零售价
-//    Danwei varchar(8), --单位
-//    guige varchar(50), -- 规格
-//    bNew varchar(2)  --- 状态：1表示新添加、上传成功后改成0
-
     //检查   数据
     private boolean checkInput() {
-    //                brandno,brandname,goodsSp,goodsname,goodsdw1,goodsUnit,goodsOut,goodsIn;
-    //               EditText businessNo,businessName;
-        String bNo = brandno.getText().toString().trim();  //品牌号
-        String bName = brandname.getText().toString(); //品牌名
+
         String gSp = goodsSp.getText().toString().trim();//商品  编号
-        String gNo = goodsdw1.getText().toString(); //商品号
         String gName = goodsname.getText().toString().trim(); //商品名
-        String gOutP = goodsOut.getText().toString(); //售价
-        String gInP = goodsIn.getText().toString(); //进价
-        String busNo = businessNo.getText().toString(); //厂家号
-        String busName = businessName.getText().toString();//厂家名
-//
-        if(!bNo.equals("") && bNo!=null){
+        String gNo = goodsdw1.getText().toString().trim(); // 货号
+        String gOutP = goodsOut.getText().toString().trim(); //售价
+        String gInP = goodsIn.getText().toString().trim(); //进价
+        String bNo = brandno.getText().toString().trim();  //品牌号
+        String bName = brandname.getText().toString().trim(); //品牌名
+
+        if(bNo.equals("") || bNo==null){
             MyToastUtils.toastInCenter(this,"品牌号不准为空").show();
             return false;
         }
-        if(!bName.equals("") && bNo!=null){
+        if(bName.equals("") || bNo==null){
             MyToastUtils.toastInCenter(this,"品牌名称不准为空").show();
             return false;
         }
-        if(!gNo.equals("") && gNo!=null){
+        if(gNo.equals("") || gNo==null){
             MyToastUtils.toastInCenter(this,"货号不准为空").show();
             return false;
         }
-        if(!gName.equals("") && gName!=null){
+        if(gName.equals("") || gName==null){
             MyToastUtils.toastInCenter(this,"商品名不准为空").show();
             return false;
         }
-        if(!gOutP.equals("") && gOutP!=null){
+        if(gOutP.equals("") || gOutP==null){
             MyToastUtils.toastInCenter(this,"售价不准为空").show();
             return false;
         }
-        if(!gInP.equals("") && gInP!=null){
+        if(gInP.equals("") || gInP==null){
             MyToastUtils.toastInCenter(this,"进价不准为空").show();
             return false;
         }
-        if(!busNo.equals("") && busNo!=null){
-            MyToastUtils.toastInCenter(this,"商家号不准为空").show();
-            return false;
-        }
-        if(!busName.equals("") && busName!=null){
-            MyToastUtils.toastInCenter(this,"商家名不准为空").show();
-            return false;
-        }
-        if(!gSp.equals("") && gSp!=null){
+        if( gSp.equals("") || gSp==null){
             MyToastUtils.toastInCenter(this,"商品编号不准为空").show();
             return false;
         }

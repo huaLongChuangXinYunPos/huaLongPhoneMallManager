@@ -29,23 +29,11 @@ import zhaoq.hl.hlphonemallmanager.utils.JSONUtils;
  */
 public class MainDownInfoAsyncTask extends BaseAsyncTask {
 
-    private Context context;
     private SQLiteDatabase db;
 
     public MainDownInfoAsyncTask(TaskCallBack callBack, Context context, SQLiteDatabase db) {
-        super(callBack);
-        this.context = context;
+        super(callBack,context);
         this.db = db;
-    }
-
-    private ProgressDialog dialog;
-
-    @Override
-    protected void onPreExecute() {
-        dialog = new ProgressDialog(context, R.style.ProDialogStyle);
-        dialog.setMessage("加载中...");
-        dialog.show();
-        super.onPreExecute();
     }
 
     @Override
@@ -57,18 +45,18 @@ public class MainDownInfoAsyncTask extends BaseAsyncTask {
         if(params!=null){
             String data = params[0];
             JSONObject object = ClientApi.getGUIZUinfo(data,params[1]);
-            try {
-                result.result_status = object.getInt("resultStatus");
-                result.data = object;
-                return result;
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Log.i("info","解析异常");
+            if(object!=null){
+                try {
+                    result.result_status = object.getInt("resultStatus");
+                    result.data = object;
+                    return result;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
-        return null;
+        return result;
     }
-
 
     private static String action;//请求   的 类型
 
@@ -141,7 +129,6 @@ public class MainDownInfoAsyncTask extends BaseAsyncTask {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        dialog.dismiss();
         super.onPostExecute(result);
     }
 }

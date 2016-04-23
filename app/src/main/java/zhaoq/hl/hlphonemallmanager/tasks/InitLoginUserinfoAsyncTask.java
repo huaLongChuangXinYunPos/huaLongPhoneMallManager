@@ -26,23 +26,11 @@ import zhaoq.hl.hlphonemallmanager.utils.JSONUtils;
  */
 public class InitLoginUserinfoAsyncTask extends BaseAsyncTask {
 
-    private Context context;
     private SQLiteDatabase db;
 
     public InitLoginUserinfoAsyncTask(TaskCallBack callBack, Context context, SQLiteDatabase db) {
-        super(callBack);
-        this.context = context;
+        super(callBack,context);
         this.db = db;
-    }
-
-    private ProgressDialog dialog;
-
-    @Override
-    protected void onPreExecute() {
-        dialog = new ProgressDialog(context, R.style.ProDialogStyle);
-        dialog.setMessage("加载中...");
-        dialog.show();
-        super.onPreExecute();
     }
 
     @Override
@@ -53,16 +41,17 @@ public class InitLoginUserinfoAsyncTask extends BaseAsyncTask {
         if(params!=null){
             String data = params[0];
             JSONObject object = ClientApi.getGUIZUinfo(data);
-            try {
-                result.result_status = object.getInt("resultStatus");
-                result.data = object;
-                return result;
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Log.i("info","解析异常");
+            if (object!=null){
+                try {
+                    result.result_status = object.getInt("resultStatus");
+                    result.data = object;
+                    return result;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
-        return null;
+        return result;
     }
 
     @Override
@@ -89,7 +78,6 @@ public class InitLoginUserinfoAsyncTask extends BaseAsyncTask {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        dialog.dismiss();
         super.onPostExecute(result);
     }
 }
