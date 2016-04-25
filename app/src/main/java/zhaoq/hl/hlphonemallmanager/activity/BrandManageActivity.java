@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.nio.channels.WritableByteChannel;
 import java.util.ArrayList;
+import java.util.List;
 
 import zhaoq.hl.hlphonemallmanager.BaseActivity;
 import zhaoq.hl.hlphonemallmanager.R;
@@ -20,6 +21,7 @@ import zhaoq.hl.hlphonemallmanager.adapter.BrandListAdapter;
 import zhaoq.hl.hlphonemallmanager.db.CursorToEntity;
 import zhaoq.hl.hlphonemallmanager.db.MySqliteHelper;
 import zhaoq.hl.hlphonemallmanager.dialog.DialogCallback;
+import zhaoq.hl.hlphonemallmanager.dialog.SelectBrandDialog;
 import zhaoq.hl.hlphonemallmanager.dialog.UpdateBrandInfoDialog;
 import zhaoq.hl.hlphonemallmanager.dialog.WriteBrandInfoDialog;
 import zhaoq.hl.hlphonemallmanager.entity.DownBrandEntity;
@@ -80,6 +82,8 @@ public class BrandManageActivity extends BaseActivity implements AdapterView.OnI
 //        deleteInfo.setOnClickListener(this);
     }
 
+    private ArrayList<DownBrandEntity> slectlist;
+
     @Override
     protected void myOnclick(View v) {
         switch(v.getId()){
@@ -89,16 +93,11 @@ public class BrandManageActivity extends BaseActivity implements AdapterView.OnI
 
             case R.id.image_query_ic:
                 //查询出商品信息
-                if(checkInput(inputName) && checkIsExitCurrList(inputName)){
+                if(checkInput(inputName)){
                     String brandName = inputName.getText().toString().trim();
-                    Cursor cursor = null;
-                    if(brandName.matches("[0-9]+")){
-                        cursor = db.query(MySqliteHelper.TABLE_BRAND_NAME,new String[]{"*"},
-                                " pinpaino = '"+ brandName +"'",null,null,null,null);
-                    }else{
-                        cursor = db.query(MySqliteHelper.TABLE_BRAND_NAME,new String[]{"*"},
-                                " pinpai = '"+brandName+"'",null,null,null,null);
-                    }
+
+                    Cursor cursor = db.query(MySqliteHelper.TABLE_BRAND_NAME,new String[]{"*"},
+                                " pinpaino like '%"+ brandName +"%' or pinpai like '%"+brandName +"%'",null,null,null,null);
 
                     switch (cursor.getCount()){
                         case 0:
@@ -108,14 +107,25 @@ public class BrandManageActivity extends BaseActivity implements AdapterView.OnI
                             DownBrandEntity dao = null;
                             while(cursor.moveToNext()){
                                 dao = CursorToEntity.getBrand(cursor);
-                                daolist.add(dao);
+                                if(checkIsExitCurrList(dao)){//daolist 中已经存在  该条品牌
+                                    daolist.add(dao);
+                                    //设置  适配数据
+                                    adapter.notifyDataSetChanged();
+                                }
                             }
-                            //设置  适配数据
-                            adapter.notifyDataSetChanged();
                             break;
 
                         default:
-                            MyToastUtils.toastInCenter(this, "当前品牌号检测到多条数据信息，请检查后台数据").show();
+                            //显示 多条信息让用户选择
+                            //创建  s  dialog修改该项品牌信息：  上下文和数据信息
+                            slectlist = new ArrayList<DownBrandEntity>();
+                            DownBrandEntity entity = null;
+                            while(cursor.moveToNext()){
+                                entity = CursorToEntity.getBrand(cursor);
+                                slectlist.add(entity);
+                            }
+                            new SelectBrandDialog(this,R.style.LoginAlertDialogStyle,slectlist).show();
+
                             break;
                     }
                 }
@@ -159,26 +169,17 @@ public class BrandManageActivity extends BaseActivity implements AdapterView.OnI
         }
     }
 
-    private boolean checkIsExitCurrList(EditText inputName) {
-        //检查当前   输入的数据  是否已经存在list中
-        String input = inputName.getText().toString().trim();
-        if(input.matches("[0-9]+")){//输入是数字
-            for(int i = 0;i< daolist.size();i++){
-                if(input.equals(daolist.get(i).getPinpaino())){
-                    MyToastUtils.toastInCenter(this,"当前品牌已经存在于列表中").show();
-                    return false;
-                }
-            }
-        }else{
-            for(int i = 0;i< daolist.size();i++){ //输入为汉字
-                if(input.equals(daolist.get(i).getPinpai())){
-                    MyToastUtils.toastInCenter(this,"当前品牌已经存在于列表中").show();
-                    return false;
-                }
+    //判断数据  是否已经存在列表中
+    private boolean checkIsExitCurrList(DownBrandEntity dao) {
+        for(int i=0;i<daolist.size();i++){
+            if(dao.equals(daolist.get(i))){
+                MyToastUtils.toastInCenter(this,"列表中已存在该项，不可重复添加").show();
+                return false;
             }
         }
         return true;
     }
+
 
     //检查数据
     private boolean checkInput(EditText inputName) {
@@ -210,21 +211,36 @@ public class BrandManageActivity extends BaseActivity implements AdapterView.OnI
                         //设置  当期被点击的数据项数据：
                     daolist.get(selectedPosition).setPinpai(result.getPinpai());
                     daolist.get(selectedPosition).setPinpaino(result.getPinpaino());
-
                     adapter.notifyDataSetChanged();
                 }
                 break;
 
             case WriteBrandInfoDialog.AUTHORITY:
                 //添加数据
-                daolist.add(result);
-                adapter.notifyDataSetChanged();
+                if(checkIsExitCurrList(result)){
+                    daolist.add(result);
+                    adapter.notifyDataSetChanged();
+                }
                 break;
             default:
                 break;
         }
     }
+
     @Override
     public void dialogCallbackSelectedItem(int position, String authority) {
+        //回调 数据信息
+        switch(authority){
+            case SelectBrandDialog.selectBrandDialog:
+                // 回调数据
+                DownBrandEntity dao = slectlist.get(position);
+                if(checkIsExitCurrList(dao)){
+                    daolist.add(dao);
+                    adapter.notifyDataSetChanged();
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

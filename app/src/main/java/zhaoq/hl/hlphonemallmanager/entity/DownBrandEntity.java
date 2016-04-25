@@ -51,6 +51,30 @@ public final class DownBrandEntity {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DownBrandEntity that = (DownBrandEntity) o;
+
+        if (pinpai != null ? !pinpai.equals(that.pinpai) : that.pinpai != null) return false;
+        if (pinpaino != null ? !pinpaino.equals(that.pinpaino) : that.pinpaino != null)
+            return false;
+        if (guizuNo != null ? !guizuNo.equals(that.guizuNo) : that.guizuNo != null) return false;
+        return !(guizu != null ? !guizu.equals(that.guizu) : that.guizu != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = pinpai != null ? pinpai.hashCode() : 0;
+        result = 31 * result + (pinpaino != null ? pinpaino.hashCode() : 0);
+        result = 31 * result + (guizuNo != null ? guizuNo.hashCode() : 0);
+        result = 31 * result + (guizu != null ? guizu.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "{" +
                 "pinpai='" + pinpai + '\'' +

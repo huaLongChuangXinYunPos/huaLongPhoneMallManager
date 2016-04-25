@@ -161,6 +161,52 @@ public final class DownGUIGUGoodsEntiity implements Serializable {
         this.guige = guige;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DownGUIGUGoodsEntiity entiity = (DownGUIGUGoodsEntiity) o;
+
+        if (Double.compare(entiity.Bzjj, Bzjj) != 0) return false;
+        if (Double.compare(entiity.Bzlsj, Bzlsj) != 0) return false;
+        if (guizu != null ? !guizu.equals(entiity.guizu) : entiity.guizu != null) return false;
+        if (guizuno != null ? !guizuno.equals(entiity.guizuno) : entiity.guizuno != null)
+            return false;
+        if (pinpai != null ? !pinpai.equals(entiity.pinpai) : entiity.pinpai != null) return false;
+        if (pinpaino != null ? !pinpaino.equals(entiity.pinpaino) : entiity.pinpaino != null)
+            return false;
+        if (cSpno_POS != null ? !cSpno_POS.equals(entiity.cSpno_POS) : entiity.cSpno_POS != null)
+            return false;
+        if (Dw1 != null ? !Dw1.equals(entiity.Dw1) : entiity.Dw1 != null) return false;
+        if (SpNo != null ? !SpNo.equals(entiity.SpNo) : entiity.SpNo != null) return false;
+        if (Mingcheng != null ? !Mingcheng.equals(entiity.Mingcheng) : entiity.Mingcheng != null)
+            return false;
+        if (Danwei != null ? !Danwei.equals(entiity.Danwei) : entiity.Danwei != null) return false;
+        return !(guige != null ? !guige.equals(entiity.guige) : entiity.guige != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 1;
+        long temp;
+        result = 31 * result + (guizu != null ? guizu.hashCode() : 0);
+        result = 31 * result + (guizuno != null ? guizuno.hashCode() : 0);
+        result = 31 * result + (pinpai != null ? pinpai.hashCode() : 0);
+        result = 31 * result + (pinpaino != null ? pinpaino.hashCode() : 0);
+        result = 31 * result + (cSpno_POS != null ? cSpno_POS.hashCode() : 0);
+        result = 31 * result + (Dw1 != null ? Dw1.hashCode() : 0);
+        result = 31 * result + (SpNo != null ? SpNo.hashCode() : 0);
+        result = 31 * result + (Mingcheng != null ? Mingcheng.hashCode() : 0);
+        temp = Double.doubleToLongBits(Bzjj);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(Bzlsj);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (Danwei != null ? Danwei.hashCode() : 0);
+        result = 31 * result + (guige != null ? guige.hashCode() : 0);
+        return result;
+    }
 
     @Override
     public String toString() {

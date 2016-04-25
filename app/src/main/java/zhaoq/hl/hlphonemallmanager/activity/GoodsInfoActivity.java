@@ -104,16 +104,16 @@ public class GoodsInfoActivity extends BaseActivity implements DialogCallback, A
             case R.id.goods_query_ic:
                 //开始查询：
                 //查询出商品信息
-                if(checkInput(goodsInput) && checkIsExitCurrList(goodsInput)){
+                if(checkInput(goodsInput)){
                     String input = goodsInput.getText().toString().trim();
-                    Cursor cursor = null;
-                    if(input.matches("[0-9.]+")){
-                        cursor = db.query(MySqliteHelper.TABLE_GOODS_NAME,new String[]{"*"},
-                                "  SpNo = '"+ input +"'",null,null,null,null);
-                    }else{
-                        cursor = db.query(MySqliteHelper.TABLE_GOODS_NAME,new String[]{"*"},
-                                " Mingcheng like '"+input+"'",null,null,null,null);
-                    }
+
+//                    select from t_goods where spno  like '%   %' or
+//                    select * from t_spxx
+//                    where pinpai like '%爱%' or mingcheng like '%爱%' or spno like '%爱%'
+
+                    Cursor cursor = db.query(MySqliteHelper.TABLE_GOODS_NAME,new String[]{"*"},
+                                "Mingcheng like '"+ input+"' or + SpNo like '%"+input+"%' or pinpai like '%"+input+"%' or Dw1 like '%"+input+"%'",
+                            null,null,null,null);
 
                     switch (cursor.getCount()){
                         case 0:
@@ -123,7 +123,9 @@ public class GoodsInfoActivity extends BaseActivity implements DialogCallback, A
                             DownGUIGUGoodsEntiity dao = null;
                             while(cursor.moveToNext()){
                                 dao = CursorToEntity.getGoodsEntity(cursor);
-                                daolist.add(dao);
+                                if(checkIsExitCurrList(dao)){
+                                    daolist.add(dao);
+                                }
                             }
                             //设置  适配数据
                             adapter.notifyDataSetChanged();
@@ -131,22 +133,18 @@ public class GoodsInfoActivity extends BaseActivity implements DialogCallback, A
 
                         default:
                             //查询到多个  数据
-                           if(input.matches("[0-9.]+")){//输入为数字
-                               MyToastUtils.toastInCenter(this,"当前查询到多个商品，请检查后台数据").show();
-                           }else{
-                               //查询到多个信息：  显示对话框
-                                //查询到多个  数据
-                               selectExtralGoodslist = new ArrayList<DownGUIGUGoodsEntiity>();
-                               //获取  数据
-                               DownGUIGUGoodsEntiity  downGUIGUGoodsEntiity = null;
-                               while(cursor.moveToNext()){
-                                   downGUIGUGoodsEntiity = CursorToEntity.getGoodsEntity(cursor);
-                                   selectExtralGoodslist.add(downGUIGUGoodsEntiity);
-                               }
-                               //弹出 对话框 让用户选择：
-                               //弹出选择对话框
-                               new SelectExtralGoodsDialog(this,R.style.LoginAlertDialogStyle,selectExtralGoodslist).show();
-                           }
+                            //查询到多个信息：  显示对话框
+                            //查询到多个  数据
+                            selectExtralGoodslist = new ArrayList<DownGUIGUGoodsEntiity>();
+                            //获取  数据
+                            DownGUIGUGoodsEntiity  downGUIGUGoodsEntiity = null;
+                            while(cursor.moveToNext()){
+                                downGUIGUGoodsEntiity = CursorToEntity.getGoodsEntity(cursor);
+                                selectExtralGoodslist.add(downGUIGUGoodsEntiity);
+                            }
+                            //弹出 对话框 让用户选择：
+                            //弹出选择对话框
+                            new SelectExtralGoodsDialog(this,R.style.LoginAlertDialogStyle,selectExtralGoodslist).show();
 
                            break;
                     }
@@ -216,15 +214,11 @@ public class GoodsInfoActivity extends BaseActivity implements DialogCallback, A
         }
     }
 
-    private boolean checkIsExitCurrList(EditText inputName) {
-        //检查当前   输入的数据  是否已经存在list中
-        String input = inputName.getText().toString().trim();
-        if(input.matches("[0-9.]+")){//输入是数字
-            for(int i = 0;i< daolist.size();i++){
-                if(input.equals(daolist.get(i).getSpNo())){
-                    MyToastUtils.toastInCenter(this,"当前商品已经存在于列表中").show();
-                    return false;
-                }
+    private boolean checkIsExitCurrList(DownGUIGUGoodsEntiity entity) {
+        for(int i=0;i<daolist.size();i++){
+            if(daolist.get(i).equals(entity)){
+                MyToastUtils.toastInCenter(this,"列表中已存在该项，不可重复添加").show();
+                return false;
             }
         }
         return true;
@@ -247,8 +241,10 @@ public class GoodsInfoActivity extends BaseActivity implements DialogCallback, A
         switch (authority){
             case SelectExtralGoodsDialog.AUTHORITY:
                 //从   集合中取出数据：
-                daolist.add(selectExtralGoodslist.get(position));
-                adapter.notifyDataSetChanged();
+                if(checkIsExitCurrList(selectExtralGoodslist.get(position))){
+                    daolist.add(selectExtralGoodslist.get(position));
+                    adapter.notifyDataSetChanged();
+                }
                 break;
 
             default:
