@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import zhaoq.hl.hlphonemallmanager.db.MySqliteHelper;
 import zhaoq.hl.hlphonemallmanager.dialog.InputInfoDialog;
@@ -21,7 +22,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private EditText edaccount,edpassword;
 
-    private Button btnLogin,btnLoaddata;
+    private Button btnLogin;
+    private ImageView btnLoaddata;
 
     private SQLiteDatabase db;
 
@@ -33,7 +35,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edaccount = (EditText) findViewById(R.id.edit_account);
         edpassword = (EditText) findViewById(R.id.edit_password);
         btnLogin = (Button) findViewById(R.id.btn_login);
-        btnLoaddata = (Button) findViewById(R.id.btn_loaddata);
+        btnLoaddata = (ImageView) findViewById(R.id.btn_loaddata);
 
         btnLogin.setOnClickListener(this);
         btnLoaddata.setOnClickListener(this);

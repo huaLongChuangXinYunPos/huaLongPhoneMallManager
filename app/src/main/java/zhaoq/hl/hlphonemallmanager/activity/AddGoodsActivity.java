@@ -161,7 +161,6 @@ public class AddGoodsActivity extends BaseActivity {
 
 
                 break;
-
             default:
                 break;
         }

@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">HlPhoneMallManager</string>
+    <string name="app_name">华隆飞讯</string>
+
+    <string name="ticketslistadapter_convertview_tag">tag</string>
 </resources>

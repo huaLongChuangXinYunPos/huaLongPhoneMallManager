@@ -14,12 +14,4 @@
         android:text="移除该项"
         />
 
-    <TextView
-        android:id="@+id/update_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="2dip"
-        android:textColor="@drawable/dialog_text_selector"
-        android:text="编辑该项"
-        />
 </LinearLayout>

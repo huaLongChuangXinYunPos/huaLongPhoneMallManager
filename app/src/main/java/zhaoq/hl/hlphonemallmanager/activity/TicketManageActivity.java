@@ -35,7 +35,7 @@ import zhaoq.hl.hlphonemallmanager.utils.ApplicationUtils;
 import zhaoq.hl.hlphonemallmanager.utils.MyToastUtils;
 import zhaoq.hl.hlphonemallmanager.utils.NumUtils;
 
-public class TicketManageActivity extends BaseActivity implements DialogCallback, AdapterView.OnItemClickListener {
+public class TicketManageActivity extends BaseActivity implements DialogCallback,AdapterView.OnItemClickListener{
 
     private ImageView icBack;
 
@@ -75,6 +75,8 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
         adapter = new TicketsListAdapter(this,adapterList);
         listView.setAdapter(adapter);
 
+        listView.setOnItemClickListener(this);
+
         initListener();
     }
 
@@ -85,8 +87,6 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
         query2.setOnClickListener(this);
         print.setOnClickListener(this);
         btnAdd.setOnClickListener(this);
-
-        listView.setOnItemClickListener(this);
 
         //监听  价格的变化
         unitPrice.addTextChangedListener(new TextWatcher() {
@@ -197,13 +197,13 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
                     Cursor cursor = null;
                     if(str1.matches("[0-9.]+") && str.matches("[0-9.]+")){ //品牌号为数字    商品号为数字
                          cursor = db.query(MySqliteHelper.TABLE_GOODS_NAME,new String[]{"*"},
-                                "pinpaino = '"+ str1 +"' and Dw1 = '"+ str +"'",null,null,null,null);
+                                "pinpaino like '%"+ str1 +"%' and Dw1 like '%"+ str +"%'",null,null,null,null);
                     }else if(str1.matches("[0-9.]+") && !str.matches("[0-9.]+")){ //品牌号为数字  商品号为汉字
                         cursor = db.query(MySqliteHelper.TABLE_GOODS_NAME,new String[]{"*"},
-                                "pinpaino = '"+ str1 +"' and Mingcheng like '%"+ str +"%'",null,null,null,null);
+                                "pinpaino like '%"+ str1 +"%' and Mingcheng like '%"+ str +"%'",null,null,null,null);
                     }else if(!str1.matches("[0-9.]+") && str.matches("[0-9.]+")){//品牌号为汉字  商品号为数字
                         cursor = db.query(MySqliteHelper.TABLE_GOODS_NAME,new String[]{"*"},
-                                "pinpai like '%"+ str1 +"%' and Dw1 = '"+ str +"'",null,null,null,null);
+                                "pinpai like '%"+ str1 +"%' and Dw1 like '%"+ str +"%'",null,null,null,null);
                     }else if(!str1.matches("[0-9.]+") && !str.matches("[0-9.]+")){//品牌号为汉字  商品号为汉字
                         cursor = db.query(MySqliteHelper.TABLE_GOODS_NAME,new String[]{"*"},
                                 "pinpai like '%"+ str1 +"%' and Mingcheng like '%"+ str +"%'",null,null,null,null);
@@ -280,12 +280,13 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
                 break;
 
             case R.id.save_and_print:
-                //保存打印
-
+                // TODO  保存打印 暂时  未处理
+                MyToastUtils.toastInCenter(this, "当前无打印机").show();
                 break;
 
             case R.id.tickets_up_info_btn:
-//                上传信息
+                // TODO  上传信息 暂时未处理，服务端没写接口
+                MyToastUtils.toastInCenter(this,"请检查服务器").show();
 
                 break;
             default:
@@ -312,6 +313,7 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
             return  true;
         }else{
             editText.setError("不准输入为空");
+            editText.requestFocus();
         }
         return false;
     }
@@ -356,34 +358,27 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
     public void dialogCallbackInputDate(DownBrandEntity result,String authority) {
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        //设置  数据：
+        brandNo.setText(adapterList.get(position).getPinpai());
+        goodsNo.setText(adapterList.get(position).getDw1());
+        unitPrice.setText(NumUtils.getFormatedNum(adapterList.get(position).getBzlsj()));
+        amount.setText(adapterList.get(position).getAmount());
+        money.setText(adapterList.get(position).getMoney());
+
+        showPopWindow(view, position);
+    }
+
+    //弹出上下文  窗口：
     private void showPopWindow(View view, final int position) {
         //弹出  菜单：
         final View popView = LayoutInflater.from(this).inflate(R.layout.pop_window_layout,null);
         //设置TextView 点击事件：
-        TextView delete = (TextView) popView.findViewById(R.id.delete_item);
-        TextView update = (TextView) popView.findViewById(R.id.update_item);
-        //添加  事件：
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //移除 该项
-                adapterList.remove(position);
-            }
-        });
+        final TextView delete = (TextView) popView.findViewById(R.id.delete_item);
 
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //获取  该项数据：
-                brandNo.setText(adapterList.get(position).getPinpai());
-                goodsNo.setText(adapterList.get(position).getMingcheng());
-                unitPrice.setText(NumUtils.getFormatedNum(adapterList.get(position).getBzlsj()));
-                amount.setText(adapterList.get(position).getAmount());
-                money.setText(adapterList.get(position).getMoney());
-            }
-        });
 
-        PopupWindow popupWindow = new PopupWindow(popView, ViewGroup.LayoutParams.WRAP_CONTENT,
+        final PopupWindow popupWindow = new PopupWindow(popView, ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,true);
         popupWindow.setTouchable(true);
         popupWindow.setTouchInterceptor(new View.OnTouchListener() {
@@ -394,19 +389,18 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
                 return false;
             }
         });
+        //添加  事件：
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //移除 该项
+                adapterList.remove(position);
+                adapter.notifyDataSetChanged();
+                popupWindow.dismiss();
+            }
+        });
         //设置  点击事件：
-        popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.dialog_text_selector));
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.list_view_item_selector));
         popupWindow.showAsDropDown(view);
-
-        Log.i("info","-0-----0-");
     }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //弹出  菜单popwindow：
-//        showPopWindow(view, position);
-//        TODO  处理  item的  点击事件
-        Log.i("info","====================");
-    }
-
 }

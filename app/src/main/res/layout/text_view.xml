@@ -7,5 +7,5 @@
           android:gravity="center_vertical"
           android:paddingLeft="20dip"
           android:textColor="@drawable/dialog_text_selector"
-          android:text="nihao"
-          android:minHeight="?android:attr/listPreferredItemHeightSmall" />
+          android:text="删除该项"
+          android:minHeight="?android:attr/listPreferredItemHeightSmall"/>

@@ -54,7 +54,6 @@
         android:layout_height="2dip"
         android:background="@color/login_bg"
         />
-
     <ListView
         android:id="@+id/tickets_ma_goods_list"
         android:dividerHeight="1dp"

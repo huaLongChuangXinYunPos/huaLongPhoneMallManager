@@ -1,6 +1,7 @@
 package zhaoq.hl.hlphonemallmanager;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -40,9 +41,17 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         db = ApplicationUtils.getInstance().getHelper(this).getWritableDatabase();
 
         guizuNo.setText("柜组编号:"+user.getGuizuno());
-        guizuName.setText("柜组名称:"+ user.getGuizu());
-        memberNo.setText("操作员编号:"+user.getGonghao());
+        guizuNo.setTextColor(getResources().getColor(R.color.list_view_pressed));
+        guizuNo.setTextSize(13);
+        guizuName.setText("柜组名称:" + user.getGuizu());
+        guizuName.setTextColor(getResources().getColor(R.color.list_view_pressed));
+        guizuName.setTextSize(13);
+        memberNo.setText("操作员编号:" + user.getGonghao());
+        memberNo.setTextColor(getResources().getColor(R.color.list_view_pressed));
+        memberNo.setTextSize(13);
         memberName.setText("操作员姓名:" + user.getMingcheng());
+        memberName.setTextColor(getResources().getColor(R.color.list_view_pressed));
+        memberName.setTextSize(13);
     }
 
     protected abstract void findView();

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -56,7 +57,6 @@ public class TicketsListAdapter extends BaseAdapter {
         if (convertView ==null){
             holder = new ViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.tickets_managment_list_title,null);
-            convertView.setBackground(context.getResources().getDrawable(R.drawable.list_view_item_selector));
 
             holder.textView1 = (TextView) convertView.findViewById(R.id.text1);
             holder.textView2 = (TextView) convertView.findViewById(R.id.text2);
@@ -69,6 +69,7 @@ public class TicketsListAdapter extends BaseAdapter {
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
+
         //绑定数据
         holder.textView1.setText((position+1)+"");  /****/
         holder.textView2.setText(list.get(position).getMingcheng());

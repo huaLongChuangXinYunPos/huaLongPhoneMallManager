@@ -59,7 +59,7 @@
         <EditText
             android:id="@+id/edit_account"
             style="@style/LoginEdittextStyle"
-            android:hint="请输入导购编号"
+            android:hint="请输入柜组编号"
             />
     </LinearLayout>
     <LinearLayout
@@ -83,7 +83,7 @@
         <EditText
             android:id="@+id/edit_password"
             style="@style/LoginEdittextStyle"
-            android:hint="请输入导购密码"
+            android:hint="请输入柜组密码"
             />
     </LinearLayout>
 
