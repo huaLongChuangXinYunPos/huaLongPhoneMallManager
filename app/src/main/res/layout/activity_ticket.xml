@@ -43,7 +43,7 @@
         layout="@layout/tickets_header_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2.7"
+        android:layout_weight="2.8"
         />
 
     <include
@@ -87,13 +87,13 @@
                 android:layout_weight="1"
                 android:text="保存打印"
                 />
-            <Button
-                android:id="@+id/tickets_up_info_btn"
-                style="@style/LoginBtnStyle"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="信息上传"
-                />
+            <!--<Button-->
+                <!--android:id="@+id/tickets_up_info_btn"-->
+                <!--style="@style/LoginBtnStyle"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="信息上传"-->
+                <!--/>-->
         </LinearLayout>
 
         <LinearLayout

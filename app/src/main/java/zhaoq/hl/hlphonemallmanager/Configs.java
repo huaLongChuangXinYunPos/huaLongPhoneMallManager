@@ -33,5 +33,7 @@ public final class Configs {
     public static final int MAIN_DOWN_INFO_AUTHORITY = 2;
 
 
-
+    //将开票信息上传  到服务器
+    public static final String TICKETS_INFO_TO_SERVER =
+            "http://192.168.3.200:1236/MpServer/AppPubServer.asmx/UpLoadlsd?";
 }

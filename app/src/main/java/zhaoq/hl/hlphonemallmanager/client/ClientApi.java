@@ -89,4 +89,25 @@ public final class ClientApi {
         }
         return null;
     }
+//上传 开票信息  到服务器
+    public static JSONObject getTicketsToServerResult(String data) {
+        JSONObject ret = null;
+        if(data!=null){
+            HashMap<String,String> map = new HashMap<String,String>();
+            map.put("name",data);
+            byte[] bytes = HttpTools.doPost(Configs.TICKETS_INFO_TO_SERVER,map);
+            if(bytes!=null){
+                try {
+                    String str = new String(bytes,"utf-8");
+                    ret = new JSONObject(str);
+                    return ret;
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return ret;
+    }
 }

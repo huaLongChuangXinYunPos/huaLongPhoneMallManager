@@ -13,7 +13,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:gravity="bottom"
             android:orientation="horizontal"
             >
@@ -31,14 +31,13 @@
                 />
             <ImageView
                 android:id="@+id/image_query_ic1"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_centerVertical="true"
                 android:focusable="false"
                 android:layout_marginLeft="2dp"
                 android:clickable="true"
                 android:background="@drawable/query_ic_selector"
-                android:layout_marginBottom="5dp"
                 />
         </LinearLayout>
         <View
@@ -49,7 +48,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:gravity="bottom"
             android:orientation="horizontal"
             >
@@ -67,14 +66,13 @@
                 />
             <ImageView
                 android:id="@+id/image_query_ic2"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_centerVertical="true"
                 android:focusable="false"
                 android:layout_marginLeft="2dp"
                 android:clickable="true"
                 android:background="@drawable/query_ic_selector"
-                android:layout_marginBottom="5dp"
                 />
         </LinearLayout>
         <View
@@ -85,7 +83,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:gravity="bottom"
             android:orientation="horizontal"
             >
@@ -99,6 +97,7 @@
                 android:id="@+id/goods_unit_price"
                 style="@style/LoginEdittextStyle"
                 android:text="0.0"
+                android:inputType="numberDecimal"
                 android:textSize="14sp"
                 android:background="@color/white"
                 />
@@ -112,6 +111,7 @@
                 android:id="@+id/goods_amount"
                 style="@style/LoginEdittextStyle"
                 android:text="0"
+                android:inputType="numberDecimal"
                 android:textSize="14sp"
                 android:background="@color/white"
                 />
@@ -125,6 +125,7 @@
                 android:id="@+id/goods_money"
                 style="@style/LoginEdittextStyle"
                 android:text="0"
+                android:inputType="numberDecimal"
                 android:textSize="14sp"
                 android:background="@color/white"
                 />

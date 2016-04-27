@@ -2,10 +2,11 @@ package zhaoq.hl.hlphonemallmanager.activity;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +18,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -31,11 +35,20 @@ import zhaoq.hl.hlphonemallmanager.dialog.SelectExtralGoodsDialog;
 import zhaoq.hl.hlphonemallmanager.dialog.SelectGoodsDialog;
 import zhaoq.hl.hlphonemallmanager.entity.DownBrandEntity;
 import zhaoq.hl.hlphonemallmanager.entity.DownGUIGUGoodsEntiity;
+import zhaoq.hl.hlphonemallmanager.entity.RequestDataEntity;
+import zhaoq.hl.hlphonemallmanager.entity.TicketsInfoToserver;
+import zhaoq.hl.hlphonemallmanager.tasks.MainDownInfoAsyncTask;
+import zhaoq.hl.hlphonemallmanager.tasks.TaskCallBack;
+import zhaoq.hl.hlphonemallmanager.tasks.TaskResult;
+import zhaoq.hl.hlphonemallmanager.tasks.TicketsToServer;
 import zhaoq.hl.hlphonemallmanager.utils.ApplicationUtils;
+import zhaoq.hl.hlphonemallmanager.utils.MyPrinter;
 import zhaoq.hl.hlphonemallmanager.utils.MyToastUtils;
 import zhaoq.hl.hlphonemallmanager.utils.NumUtils;
+import zhaoq.hl.hlphonemallmanager.utils.StateUtils;
+import zhaoq.hl.hlphonemallmanager.utils.TimeUtils;
 
-public class TicketManageActivity extends BaseActivity implements DialogCallback,AdapterView.OnItemClickListener{
+public class TicketManageActivity extends BaseActivity implements DialogCallback,AdapterView.OnItemClickListener ,TaskCallBack{
 
     private ImageView icBack;
 
@@ -43,7 +56,7 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
 
     private ImageView query1,query2;
 
-    private Button btnAdd,updateInfo,print;
+    private Button btnAdd,print;
 
     private SQLiteDatabase db;
 
@@ -67,7 +80,6 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
         query2 = (ImageView) findViewById(R.id.image_query_ic2);
         btnAdd = (Button) findViewById(R.id.btn_add);
         print = (Button) findViewById(R.id.save_and_print);
-        updateInfo = (Button) findViewById(R.id.tickets_up_info_btn);
 
         listView = (ListView) findViewById(R.id.tickets_ma_goods_list);  //查询  到listView
 
@@ -82,7 +94,6 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
 
     private void initListener() {
         icBack.setOnClickListener(this);
-        updateInfo.setOnClickListener(this);
         query1.setOnClickListener(this);
         query2.setOnClickListener(this);
         print.setOnClickListener(this);
@@ -156,14 +167,8 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
                     //获取 数据库
                     String str = brandNo.getText().toString().trim(); //获取  输入内容
                     //执行查询：
-                    Cursor cursor = null;
-                    if(str.matches("[0-9]+")){ //如果是   数字串  根据
-                        cursor = db.query(MySqliteHelper.TABLE_BRAND_NAME,new String[]{"*"},
-                                "pinpaino like '%"+str+"%'",null,null,null,null);
-                    }else{
-                        cursor = db.query(MySqliteHelper.TABLE_BRAND_NAME,new String[]{"*"},
-                                "pinpai like '%"+str+"%'",null,null,null,null);
-                    }
+                    Cursor cursor = db.query(MySqliteHelper.TABLE_BRAND_NAME,new String[]{"*"},
+                                "pinpaino like '%"+str+"%' or pinpai like '%"+ str+"%'",null,null,null,null);
 
                     switch (cursor.getCount()){
                         case 0:  //没查询到
@@ -194,20 +199,8 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
                     String str1 = brandNo.getText().toString().trim(); //品牌号
                     String str = goodsNo.getText().toString().trim(); //获取  输入内容  货号
                     // 执行查询：
-                    Cursor cursor = null;
-                    if(str1.matches("[0-9.]+") && str.matches("[0-9.]+")){ //品牌号为数字    商品号为数字
-                         cursor = db.query(MySqliteHelper.TABLE_GOODS_NAME,new String[]{"*"},
-                                "pinpaino like '%"+ str1 +"%' and Dw1 like '%"+ str +"%'",null,null,null,null);
-                    }else if(str1.matches("[0-9.]+") && !str.matches("[0-9.]+")){ //品牌号为数字  商品号为汉字
-                        cursor = db.query(MySqliteHelper.TABLE_GOODS_NAME,new String[]{"*"},
-                                "pinpaino like '%"+ str1 +"%' and Mingcheng like '%"+ str +"%'",null,null,null,null);
-                    }else if(!str1.matches("[0-9.]+") && str.matches("[0-9.]+")){//品牌号为汉字  商品号为数字
-                        cursor = db.query(MySqliteHelper.TABLE_GOODS_NAME,new String[]{"*"},
-                                "pinpai like '%"+ str1 +"%' and Dw1 like '%"+ str +"%'",null,null,null,null);
-                    }else if(!str1.matches("[0-9.]+") && !str.matches("[0-9.]+")){//品牌号为汉字  商品号为汉字
-                        cursor = db.query(MySqliteHelper.TABLE_GOODS_NAME,new String[]{"*"},
-                                "pinpai like '%"+ str1 +"%' and Mingcheng like '%"+ str +"%'",null,null,null,null);
-                    }
+                    Cursor cursor = db.query(MySqliteHelper.TABLE_GOODS_NAME,new String[]{"*"},
+                                "pinpaino like '%"+ str1 +"%' or pinpai like '%"+str1+"%' or Dw1 like '%"+ str +"%' or Mingcheng like '%"+str+"%'",null,null,null,null);
                     switch (cursor.getCount()){
                         case 0: //未查询到
                             MyToastUtils.toastInCenter(this, "未查询到当前商品").show();
@@ -250,7 +243,7 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
                                 entiity = CursorToEntity.getGoodsEntity(cursor);
                                 entiity.setBzlsj(Double.parseDouble(unitPrice.getText().toString().trim()));
                                 entiity.setAmount(amount.getText().toString().trim());
-                                entiity.setMoney(amount.getText().toString().trim());
+                                entiity.setMoney(money.getText().toString().trim());
                                 adapterList.add(entiity);
                             }else{
                                 MyToastUtils.toastInCenter(this,"添加失败，当前商品已存在于列表中").show();
@@ -280,19 +273,54 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
                 break;
 
             case R.id.save_and_print:
-                // TODO  保存打印 暂时  未处理
-                MyToastUtils.toastInCenter(this, "当前无打印机").show();
-                break;
+                //打印  生成单号：
+                sellNo = getSellNo();
+                if(adapterList != null && adapterList.size()!=0){
+                    if(isPrint){ //当前   正在打印
+                        MyToastUtils.toastInCenter(this, "当前正在打印").show();
+                    }else{
+                        //   上传信息   到服务器：   并保存本地
+                        new TicketsToServer(this,this,adapterList,sellNo).execute();
 
-            case R.id.tickets_up_info_btn:
-                // TODO  上传信息 暂时未处理，服务端没写接口
-                MyToastUtils.toastInCenter(this,"请检查服务器").show();
+                        isPrint = true;
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                MyPrinter pr = new MyPrinter();
+                                pr.print(TicketManageActivity.this, adapterList, "顾客联", sellNo);
+                                pr.print(TicketManageActivity.this, adapterList, "柜组联", sellNo);
+                                if(pr.m_printer.Open() == 0){  //关闭  打印机
+                                    pr.m_printer.Close();
+                                }
+                                isPrint = false;
 
+                                //打印完成  通知主线程  更新ui：
+                                Message msg = Message.obtain();
+                                msg.what = 0;
+                                handler.sendMessage(msg);
+                            }
+                        }).start();
+                    }
+                }else{
+                    MyToastUtils.toastInCenter(this, "当前单数据为空").show();
+                }
                 break;
             default:
                 break;
         }
     }
+
+    //生成销售单号
+    private String getSellNo() {
+        String no = "";
+        no = TimeUtils.getSystemNowTime("yyyyMMdd") + TimeUtils.getSystemNowTime("hhmmss");
+        return no.substring(0,12);
+    }
+
+    //记录  销售单号
+    private static String sellNo;
+
+    private static boolean isPrint = false;  //判断当前  是否正在打印
 
     //检查  是否已经被添加进过集合中
     private boolean checkIsAdd(Cursor cursor) {
@@ -402,5 +430,55 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
         //设置  点击事件：
         popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.list_view_item_selector));
         popupWindow.showAsDropDown(view);
+    }
+
+    //上传信息的  回调接口
+    @Override
+    public void taskFinished(TaskResult result) {
+        //保存  判断 数据：
+        if(result.data!=null) {
+            JSONObject object = result.data;
+            //判断 返回数据状态信息：
+            int resultStatus = result.result_status;
+
+            switch (resultStatus) {
+                //判断  状态码
+                case 0:
+                    break;
+                case 1:
+                    //上传成功  数据 保存到本地服务器
+                    //将数据库中字段  更新为1
+                    db = ApplicationUtils.getInstance().getHelper(this).getWritableDatabase();
+                    for(int i=0;i<adapterList.size();i++){
+                        db.execSQL("update "+MySqliteHelper.TABLE_TICKETS_NAME+
+                                " set lsdDown = 1 where spno = '" +adapterList.get(i).getSpNo()+"'");
+                    }
+                    //
+                    MyToastUtils.toastInCenter(this,"数据已上传至服务器").show();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+
+    private Mhandler handler = new Mhandler();
+
+    public class Mhandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            //处理消息  更新ui数据
+            switch (msg.what){
+                case 0:
+                    //处理  主线程消息：
+                    adapterList.clear();
+                    adapter.notifyDataSetChanged();
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 }

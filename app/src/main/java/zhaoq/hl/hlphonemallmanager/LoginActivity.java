@@ -12,8 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import zhaoq.hl.hlphonemallmanager.db.CursorToEntity;
 import zhaoq.hl.hlphonemallmanager.db.MySqliteHelper;
 import zhaoq.hl.hlphonemallmanager.dialog.InputInfoDialog;
+import zhaoq.hl.hlphonemallmanager.entity.DownGUIGUGoodsEntiity;
 import zhaoq.hl.hlphonemallmanager.entity.LoginUserEntitiy;
 import zhaoq.hl.hlphonemallmanager.utils.ApplicationUtils;
 import zhaoq.hl.hlphonemallmanager.utils.MyToastUtils;
@@ -44,8 +46,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         db = ApplicationUtils.getInstance().getHelper(this).getWritableDatabase();
 
         ApplicationUtils.getInstance().addActivity(this);
-    }
 
+    }
 
     /**
      * 实现  单击事件
