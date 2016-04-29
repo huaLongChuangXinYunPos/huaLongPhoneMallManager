@@ -20,9 +20,12 @@ public class SellQueryAsyncTask extends BaseAsyncTask {
 
     private TaskCallBack callBack;
 
+    private Context context;
+
     public SellQueryAsyncTask(TaskCallBack callBack,Context context) {
         super(callBack,context);
         this.callBack = callBack;
+        this.context = context;
     }
 
     public static final int authority = 8; //给该  taskResult赋值
@@ -33,7 +36,7 @@ public class SellQueryAsyncTask extends BaseAsyncTask {
         result.task_id = authority;
         if(params != null){
             String data = params[0];
-            JSONObject object = ClientApi.getSellGoodsInfoinfo(data);
+            JSONObject object = ClientApi.getSellGoodsInfoinfo(data,context);
             if(object!=null){
                 try {
                     result.result_status = object.getInt("resultStatus");

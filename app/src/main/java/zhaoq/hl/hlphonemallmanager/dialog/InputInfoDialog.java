@@ -2,6 +2,7 @@ package zhaoq.hl.hlphonemallmanager.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+import zhaoq.hl.hlphonemallmanager.Configs;
 import zhaoq.hl.hlphonemallmanager.R;
 import zhaoq.hl.hlphonemallmanager.entity.RequestDataEntity;
 import zhaoq.hl.hlphonemallmanager.tasks.InitLoginUserinfoAsyncTask;
@@ -43,6 +45,8 @@ public class InputInfoDialog extends Dialog implements View.OnClickListener,Task
     private EditText editAccount;
     private EditText editPassword;
 
+    private EditText serverIp;
+
     private Button btnSure,btnExit;
 
     @Override
@@ -54,6 +58,8 @@ public class InputInfoDialog extends Dialog implements View.OnClickListener,Task
         editPassword = (EditText) view.findViewById(R.id.edit_password);
         btnExit = (Button) view.findViewById(R.id.dialog_input_exit);
         btnSure = (Button) view.findViewById(R.id.dialog_input_sure);
+
+        serverIp  = (EditText) view.findViewById(R.id.server_ip);
 
         initListener();
         this.setContentView(view);
@@ -77,8 +83,9 @@ public class InputInfoDialog extends Dialog implements View.OnClickListener,Task
                 //检查  输入数据信息
                 String account = editAccount.getText().toString().trim();
                 String password = editPassword.getText().toString().trim();
+                String ip = serverIp.getText().toString().trim();
 
-                if(checkInput(account,password)){
+                if(checkInput(account,password) && checkIp(ip)){
                     //添加  数据信息
                     ArrayList<String> list = new ArrayList<String>();
 
@@ -102,6 +109,20 @@ public class InputInfoDialog extends Dialog implements View.OnClickListener,Task
             default:
                 break;
         }
+    }
+
+    //检查  ip  是否符合  规范
+    private boolean checkIp(String ip) {
+        if(ip.matches("((25[0-5]|2[0-4]\\d|1?\\d?\\d)\\.){3}(25[0-5]|2[0-4]\\d|1?\\d?\\d)")){
+            //保存数据到  本地Configs中
+            SharedPreferences sp = context.getSharedPreferences(Configs.SP_FILE_NAME,Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("serverIp",ip);
+            editor.commit();
+            return true;
+        }
+        MyToastUtils.toastInCenter(context,"服务器Ip输入错误").show();
+        return false;
     }
 
     //检查  数据

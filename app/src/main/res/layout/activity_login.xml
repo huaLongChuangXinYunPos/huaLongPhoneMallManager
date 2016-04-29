@@ -70,6 +70,7 @@
                     android:id="@+id/edit_account"
                     style="@style/LoginEdittextStyle"
                     android:hint="请输入导购编号"
+                    android:text="10201"
                     android:background="@color/white"
                     />
             </LinearLayout>
@@ -93,6 +94,7 @@
                 <EditText
                     android:id="@+id/edit_password"
                     style="@style/LoginEdittextStyle"
+                    android:text="10201"
                     android:hint="请输入导购密码"
                     android:background="@color/white"
                     />

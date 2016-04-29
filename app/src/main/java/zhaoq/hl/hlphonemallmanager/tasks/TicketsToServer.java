@@ -67,7 +67,7 @@ public class TicketsToServer extends BaseAsyncTask {
                 String json = new Gson().toJson(dao);
                 list1.add(json);
             }
-            JSONObject object = ClientApi.getTicketsToServerResult(list1.toString());
+            JSONObject object = ClientApi.getTicketsToServerResult(list1.toString(),context);
             try {
                 if(object!=null){
                     result.result_status = object.getInt("resultStatus");

@@ -31,9 +31,12 @@ public class MainDownInfoAsyncTask extends BaseAsyncTask {
 
     private SQLiteDatabase db;
 
+    private Context context;
+
     public MainDownInfoAsyncTask(TaskCallBack callBack, Context context, SQLiteDatabase db) {
         super(callBack,context);
         this.db = db;
+        this.context = context;
     }
 
     @Override
@@ -44,7 +47,7 @@ public class MainDownInfoAsyncTask extends BaseAsyncTask {
 
         if(params!=null){
             String data = params[0];
-            JSONObject object = ClientApi.getGUIZUinfo(data,params[1]);
+            JSONObject object = ClientApi.getGUIZUinfo(data,params[1],context);
             if(object!=null){
                 try {
                     result.result_status = object.getInt("resultStatus");

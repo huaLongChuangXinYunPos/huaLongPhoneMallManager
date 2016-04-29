@@ -28,9 +28,12 @@ public class InitLoginUserinfoAsyncTask extends BaseAsyncTask {
 
     private SQLiteDatabase db;
 
+    private Context context;
+
     public InitLoginUserinfoAsyncTask(TaskCallBack callBack, Context context, SQLiteDatabase db) {
         super(callBack,context);
         this.db = db;
+        this.context = context;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class InitLoginUserinfoAsyncTask extends BaseAsyncTask {
 
         if(params!=null){
             String data = params[0];
-            JSONObject object = ClientApi.getGUIZUinfo(data);
+            JSONObject object = ClientApi.getGUIZUinfo(data,context);
             if (object!=null){
                 try {
                     result.result_status = object.getInt("resultStatus");

@@ -11,19 +11,19 @@ public final class Configs {
 
     //服务器地址是
     public static final  String BASE_SERVER_URL =
-            "http://192.168.3.200:1236/MpServer/AppPubServer.asmx/";
+            "http://%s:1236/MpServer/AppPubServer.asmx/";
 
     //获取   柜组信息 的url   用于初始化  数据到本地  并添加数据到本地信息中:  在login中获取
     public static final String LOGIN_GET_GUIZU_INFO_URL =
-            "http://192.168.3.200:1236/MpServer/AppPubServer.asmx/GetGuizuCode?";
+            "http://%s:1236/MpServer/AppPubServer.asmx/GetGuizuCode?";
 
     //获取   柜组信息 的url   用于初始化  数据到本地  并添加数据到本地信息中:  在  main中获取
     public static final String MAIN_DOWN_INFO_URL =
-            "http://192.168.3.200:1236/MpServer/AppPubServer.asmx/GetGuizuInfor?";
+            "http://%s:1236/MpServer/AppPubServer.asmx/GetGuizuInfor?";
 
     //柜组  销售查询url:
     public static final String SELL_QUERY_URL =
-            "http://192.168.3.200:1236/MpServer/AppPubServer.asmx/GetGuizuSale?";
+            "http://%s:1236/MpServer/AppPubServer.asmx/GetGuizuSale?";
 
     //获取  柜组信息号的  异步任务标识
     public static final int GET_GUIZU_INFO_AUTHORITY = 1;
@@ -35,5 +35,7 @@ public final class Configs {
 
     //将开票信息上传  到服务器
     public static final String TICKETS_INFO_TO_SERVER =
-            "http://192.168.3.200:1236/MpServer/AppPubServer.asmx/UpLoadlsd?";
+            "http://%s:1236/MpServer/AppPubServer.asmx/UpLoadlsd?";
+
+    public static final String SP_FILE_NAME = "configs";
 }

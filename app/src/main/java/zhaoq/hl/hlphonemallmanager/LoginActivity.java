@@ -46,7 +46,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         db = ApplicationUtils.getInstance().getHelper(this).getWritableDatabase();
 
         ApplicationUtils.getInstance().addActivity(this);
-
     }
 
     /**

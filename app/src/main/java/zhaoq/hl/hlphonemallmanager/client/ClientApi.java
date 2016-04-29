@@ -1,5 +1,6 @@
 package zhaoq.hl.hlphonemallmanager.client;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -25,11 +26,20 @@ public final class ClientApi {
      * @param data
      * @return
      */
-    public static JSONObject getGUIZUinfo(String data){
+    public static JSONObject getGUIZUinfo(String data,Context context){
         JSONObject ret = null;
         HashMap<String,String> map = new HashMap<String,String>();
         map.put("name",data);
-        byte[] bytes = HttpTools.doPost(Configs.LOGIN_GET_GUIZU_INFO_URL,map);
+
+        String url = String.format(Configs.LOGIN_GET_GUIZU_INFO_URL,context.getSharedPreferences(
+                Configs.SP_FILE_NAME,Context.MODE_PRIVATE
+        ).getString("serverIp","0"));
+
+        if(url.equals("0")){
+            return null;
+        }
+
+        byte[] bytes = HttpTools.doPost(url,map);
         if(bytes!=null){
             try {
                 String result = new String(bytes,"utf-8");
@@ -50,11 +60,17 @@ public final class ClientApi {
      * 主界面  中初始化    下载数据信息
      * @return
      */
-    public static JSONObject getGUIZUinfo(String data,String action){
+    public static JSONObject getGUIZUinfo(String data,String action,Context context){
         JSONObject ret = null;
         HashMap<String,String> map = new HashMap<String,String>();
         map.put("name",data);
-        byte[] bytes = HttpTools.doPost(Configs.MAIN_DOWN_INFO_URL,map);
+        String url = String.format(Configs.MAIN_DOWN_INFO_URL,context.getSharedPreferences(
+                Configs.SP_FILE_NAME,Context.MODE_PRIVATE
+        ).getString("serverIp","0"));
+        if(url.equals("0")){
+            return null;
+        }
+        byte[] bytes = HttpTools.doPost(url,map);
         if(bytes!=null){
             try {
                 String result = new String(bytes,"utf-8");
@@ -70,12 +86,18 @@ public final class ClientApi {
     }
 
     //获取  创建销售情况的   查询信息表
-    public static JSONObject getSellGoodsInfoinfo(String data) {
+    public static JSONObject getSellGoodsInfoinfo(String data,Context context) {
         JSONObject ret  = null;
         HashMap<String,String> map = new HashMap<>();
         map.put("name",data);
 
-        byte[] bytes = HttpTools.doPost(Configs.SELL_QUERY_URL,map);
+        String url = String.format(Configs.SELL_QUERY_URL,context.getSharedPreferences(
+                Configs.SP_FILE_NAME,Context.MODE_PRIVATE
+        ).getString("serverIp","0"));
+        if(url.equals("0")){
+            return null;
+        }
+        byte[] bytes = HttpTools.doPost(url,map);
         if(bytes!=null){
             try {
                 String str = new String(bytes,"utf-8");
@@ -90,12 +112,20 @@ public final class ClientApi {
         return null;
     }
 //上传 开票信息  到服务器
-    public static JSONObject getTicketsToServerResult(String data) {
+    public static JSONObject getTicketsToServerResult(String data,Context context) {
         JSONObject ret = null;
         if(data!=null){
             HashMap<String,String> map = new HashMap<String,String>();
             map.put("name",data);
-            byte[] bytes = HttpTools.doPost(Configs.TICKETS_INFO_TO_SERVER,map);
+
+            String url = String.format(Configs.TICKETS_INFO_TO_SERVER,context.getSharedPreferences(
+                    Configs.SP_FILE_NAME,Context.MODE_PRIVATE
+            ).getString("serverIp","0"));
+            if(url.equals("0")){
+                return null;
+            }
+
+            byte[] bytes = HttpTools.doPost(url,map);
             if(bytes!=null){
                 try {
                     String str = new String(bytes,"utf-8");
