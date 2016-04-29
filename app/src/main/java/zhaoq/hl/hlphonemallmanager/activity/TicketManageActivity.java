@@ -2,6 +2,7 @@ package zhaoq.hl.hlphonemallmanager.activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import org.json.JSONObject;
@@ -29,6 +31,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import zhaoq.hl.hlphonemallmanager.BaseActivity;
+import zhaoq.hl.hlphonemallmanager.Configs;
 import zhaoq.hl.hlphonemallmanager.R;
 import zhaoq.hl.hlphonemallmanager.adapter.TicketsListAdapter;
 import zhaoq.hl.hlphonemallmanager.db.CursorToEntity;
@@ -68,6 +71,8 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
 
     private ListView listView;
 
+    private SharedPreferences sp;
+
     @Override
     protected void findView() {
         setContentView(R.layout.activity_ticket);
@@ -98,6 +103,8 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
         listView.setOnItemClickListener(this);
 
         initListener();
+
+        sp = getSharedPreferences(Configs.SP_FILE_NAME,MODE_PRIVATE);
     }
 
     private void initListener() {
@@ -285,6 +292,9 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
             case R.id.save_and_print:
                 //打印  生成单号：
                 sellNo = getSellNo();
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("sellNo",sellNo);
+                editor.commit();
                 if(adapterList != null && adapterList.size()!=0){
                     if(isPrint){ //当前   正在打印
                         MyToastUtils.toastInCenter(this, "当前正在打印").show();
@@ -317,18 +327,26 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
                 break;
 
             case R.id.tickets_up_info_btn:
-                //查看图片：
-                //从路径下 查看图片
-                if(ImageUtils.getImg(this, "sheetNo")!=null) {
-                    Dialog dialog = new Dialog(this,R.style.LoginAlertDialogStyle){
-                        @Override
-                        protected void onCreate(Bundle savedInstanceState) {
-                            ImageView imageView = (ImageView) LayoutInflater.from(TicketManageActivity.this).inflate(R.layout.image_view,null);
-                            imageView.setImageBitmap(ImageUtils.getImg(TicketManageActivity.this, "sheetNo"));
-                            setContentView(imageView);
-                        }
-                    };
-                    dialog.show();
+                final String sellTe = sp.getString("sellNo","0");
+                if(!sellTe.equals("0")){
+                    //查看图片：
+                    //从路径下 查看图片
+                    if(ImageUtils.getImg(this, "sheetNo")!=null) {
+                        Dialog dialog = new Dialog(this,R.style.LoginAlertDialogStyle){
+                            @Override
+                            protected void onCreate(Bundle savedInstanceState) {
+                                View view = (View) LayoutInflater.from(TicketManageActivity.this).inflate(R.layout.image_view,null);
+                                ImageView imageView = (ImageView) view.findViewById(R.id.image_view);
+                                TextView textView = (TextView) view.findViewById(R.id.text_view);
+                                imageView.setImageBitmap(ImageUtils.getImg(TicketManageActivity.this, "sheetNo"));
+                                textView.setText(sellTe);
+                                setContentView(view);
+                            }
+                        };
+                        dialog.show();
+                    }
+                }else{
+                    MyToastUtils.toastInCenter(this,"当前无打印的条码数据").show();
                 }
                 break;
             default:

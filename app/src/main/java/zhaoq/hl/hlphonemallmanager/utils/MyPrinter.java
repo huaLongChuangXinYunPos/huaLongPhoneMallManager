@@ -128,6 +128,9 @@ public final class MyPrinter{
         if(ImageUtils.getImg(context,"sheetNo")!=null) {
             m_printer.PrintBitmap(ImageUtils.getImg(context,"sheetNo"));
         }
+        m_printer.PrintLineInit(24);
+        m_printer.PrintLineString(sellNo, 24, printer.PrintType.Centering, false);
+        m_printer.PrintLineEnd();
 
         m_printer.PrintLineInit(22);
         m_printer.PrintLineString("-----------------------------------------", 22, printer.PrintType.Centering, false);
