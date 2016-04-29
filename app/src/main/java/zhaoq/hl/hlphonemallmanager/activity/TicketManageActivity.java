@@ -1,10 +1,14 @@
 package zhaoq.hl.hlphonemallmanager.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -30,6 +34,7 @@ import zhaoq.hl.hlphonemallmanager.adapter.TicketsListAdapter;
 import zhaoq.hl.hlphonemallmanager.db.CursorToEntity;
 import zhaoq.hl.hlphonemallmanager.db.MySqliteHelper;
 import zhaoq.hl.hlphonemallmanager.dialog.DialogCallback;
+import zhaoq.hl.hlphonemallmanager.dialog.InputInfoDialog;
 import zhaoq.hl.hlphonemallmanager.dialog.SelectBrandDialog;
 import zhaoq.hl.hlphonemallmanager.dialog.SelectExtralGoodsDialog;
 import zhaoq.hl.hlphonemallmanager.dialog.SelectGoodsDialog;
@@ -42,6 +47,7 @@ import zhaoq.hl.hlphonemallmanager.tasks.TaskCallBack;
 import zhaoq.hl.hlphonemallmanager.tasks.TaskResult;
 import zhaoq.hl.hlphonemallmanager.tasks.TicketsToServer;
 import zhaoq.hl.hlphonemallmanager.utils.ApplicationUtils;
+import zhaoq.hl.hlphonemallmanager.utils.ImageUtils;
 import zhaoq.hl.hlphonemallmanager.utils.MyPrinter;
 import zhaoq.hl.hlphonemallmanager.utils.MyToastUtils;
 import zhaoq.hl.hlphonemallmanager.utils.NumUtils;
@@ -56,7 +62,7 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
 
     private ImageView query1,query2;
 
-    private Button btnAdd,print;
+    private Button btnAdd,print,seePicture;
 
     private SQLiteDatabase db;
 
@@ -81,6 +87,8 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
         btnAdd = (Button) findViewById(R.id.btn_add);
         print = (Button) findViewById(R.id.save_and_print);
 
+        seePicture = (Button) findViewById(R.id.tickets_up_info_btn);
+
         listView = (ListView) findViewById(R.id.tickets_ma_goods_list);  //查询  到listView
 
         adapterList = new ArrayList<DownGUIGUGoodsEntiity>();
@@ -98,6 +106,8 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
         query2.setOnClickListener(this);
         print.setOnClickListener(this);
         btnAdd.setOnClickListener(this);
+
+        seePicture.setOnClickListener(this);
 
         //监听  价格的变化
         unitPrice.addTextChangedListener(new TextWatcher() {
@@ -303,6 +313,22 @@ public class TicketManageActivity extends BaseActivity implements DialogCallback
                     }
                 }else{
                     MyToastUtils.toastInCenter(this, "当前单数据为空").show();
+                }
+                break;
+
+            case R.id.tickets_up_info_btn:
+                //查看图片：
+                //从路径下 查看图片
+                if(ImageUtils.getImg(this, "sheetNo")!=null) {
+                    Dialog dialog = new Dialog(this,R.style.LoginAlertDialogStyle){
+                        @Override
+                        protected void onCreate(Bundle savedInstanceState) {
+                            ImageView imageView = (ImageView) LayoutInflater.from(TicketManageActivity.this).inflate(R.layout.image_view,null);
+                            imageView.setImageBitmap(ImageUtils.getImg(TicketManageActivity.this, "sheetNo"));
+                            setContentView(imageView);
+                        }
+                    };
+                    dialog.show();
                 }
                 break;
             default:

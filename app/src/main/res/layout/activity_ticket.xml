@@ -87,13 +87,13 @@
                 android:layout_weight="1"
                 android:text="保存打印"
                 />
-            <!--<Button-->
-                <!--android:id="@+id/tickets_up_info_btn"-->
-                <!--style="@style/LoginBtnStyle"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="信息上传"-->
-                <!--/>-->
+            <Button
+                android:id="@+id/tickets_up_info_btn"
+                style="@style/LoginBtnStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="条码图片"
+                />
         </LinearLayout>
 
         <LinearLayout
