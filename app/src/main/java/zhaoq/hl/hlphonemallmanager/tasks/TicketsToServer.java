@@ -56,7 +56,7 @@ public class TicketsToServer extends BaseAsyncTask {
             ArrayList<String> list1 = new ArrayList<String>();
             for (int i=0;i<adapterList.size();i++){
                 TicketsInfoToserver dao = new TicketsInfoToserver();
-                dao.setLsdno("123432324323");  //单号
+                dao.setLsdno(sellNo);  //单号
                 dao.setSpno(adapterList.get(i).getSpNo());
                 dao.setShuliang(adapterList.get(i).getAmount());
                 dao.setDanjia(NumUtils.getFormatedNum(adapterList.get(i).getBzlsj()));
